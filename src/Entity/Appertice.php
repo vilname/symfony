@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
+use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
@@ -14,6 +16,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Appertice
 {
+    use DoctrineEntityCreatedAtTrait;
+    use DoctrineEntityUpdatedAtTrait;
+
     /**
      * @ORM\Column(name="id", type="bigint", unique=true)
      * @ORM\Id
@@ -32,18 +37,6 @@ class Appertice
      * @ORM\ManyToMany(targetEntity="ApperticeSkills", mappedBy="appertice_id")
      */
     private Collection $apperticeId;
-
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @Gedmo\Timestampable(on="create")
-     */
-    private DateTime $createdAt;
-
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
-     * @Gedmo\Timestampable(on="update")
-     */
-    private DateTime $updatedAt;
 
     /**
      * @return int
@@ -75,38 +68,6 @@ class Appertice
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt(): DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     */
-    public function setUpdatedAt(DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
     }
 
     /**

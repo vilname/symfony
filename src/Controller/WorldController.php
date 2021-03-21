@@ -3,7 +3,9 @@
 
 namespace App\Controller;
 
+
 use App\Service\ApperticeService;
+use App\Service\TeacherService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,9 +15,13 @@ class WorldController extends AbstractController
     /** @var ApperticeService */
     private $apperticeService;
 
-    public function __construct(ApperticeService $apperticeService)
+    /** @var TeacherService */
+    private $teacherService;
+
+    public function __construct(ApperticeService $apperticeService, TeacherService $teacherService)
     {
         $this->apperticeService = $apperticeService;
+        $this->teacherService = $teacherService;
     }
 
     /**
@@ -30,6 +36,14 @@ class WorldController extends AbstractController
         //     print_r($this->apperticeService->findPlace());
         // echo "</pre>";
 
-        return $this->json($this->apperticeService->findPlace());
+//        return $this->apperticeService->findPlace();
+
+        $a = $this->teacherService->getTeachers();
+
+//        echo "<pre>";
+//        print_r($a);
+//        echo "</pre>";
+
+        return new Response(json_encode($a));
     }
 }

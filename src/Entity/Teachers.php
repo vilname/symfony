@@ -30,11 +30,9 @@ class Teachers
     private string $name;
 
     /**
-     * @Assert\Range(
-     *      min = 4,
-     *      max = 5,
-     *      notInRangeMessage = "Минимальное количество активных групп {{ min }} и максимальное количество {{ max }}",
-     * )
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
      */
     private int $groupCount;
 
@@ -160,5 +158,13 @@ class Teachers
     public function setUpdatedAt(DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => 111111111,
+            'login' => 'test',
+        ];
     }
 }

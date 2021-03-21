@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
+use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -15,6 +17,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Group
 {
+    use DoctrineEntityCreatedAtTrait;
+    use DoctrineEntityUpdatedAtTrait;
+
     /**
      * @ORM\Column(name="id", type="bigint", unique=true)
      * @ORM\Id
@@ -49,18 +54,6 @@ class Group
      * @ORM\Column(type="boolean")
      */
     private bool $active;
-
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @Gedmo\Timestampable(on="create")
-     */
-    private DateTime $createdAt;
-
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
-     * @Gedmo\Timestampable(on="update")
-     */
-    private DateTime $updatedAt;
 
     /**
      * @return int
@@ -124,37 +117,5 @@ class Group
     public function setActive(bool $active): void
     {
         $this->active = $active;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt(): DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     */
-    public function setUpdatedAt(DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
     }
 }

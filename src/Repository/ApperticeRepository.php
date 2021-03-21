@@ -11,13 +11,13 @@ class ApperticeRepository extends EntityRepository
     public function findGroup(int $apperticeId): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('g')
-            ->from($this->getClassName(), 'ap')
-            ->join('group', 'g')
-            ->where('ap.apperticeId = :apId')
-            ->andwhere('g.groupId.skillId = ap.apperticeId.skillId')
-            ->groupBy('g.groupId')
-            ->setParameter(':apId', $apperticeId);
+        $qb->select('ap')
+            ->from($this->getClassName(), 'ap');
+//            ->join('group', 'g')
+//            ->where('ap.apperticeId = :apId')
+//            ->andwhere('g.groupId.skillId = ap.apperticeId.skillId')
+//            ->groupBy('g.groupId')
+//            ->setParameter(':apId', $apperticeId);
 
         return $qb->getQuery()->getResult();
     }
