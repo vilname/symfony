@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Skills
 {
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Appertice", mappedBy="apperticeId")
+     */
+    private $appertices;
+
     /**
      * @ORM\Column(name="id", type="bigint", unique=true)
      * @ORM\Id
@@ -25,6 +32,11 @@ class Skills
      * @ORM\Column(type="string", length=32, nullable=false)
      */
     private string $skills;
+
+    public function __construct()
+    {
+        $this->appertices = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -43,18 +55,26 @@ class Skills
     }
 
     /**
-     * @return string
+     * @return Collection|Appertice[]
      */
-    public function getSkills(): string
+    public function getArticles(): Collection
     {
-        return $this->skills;
+        return $this->appertices;
     }
-
-    /**
-     * @param string $skills
-     */
-    public function setSkills(string $skills): void
+    public function addAppertice(Appertice $appertices): self
     {
-        $this->skills = $skills;
+        if (!$this->appertices->contains($appertices)) {
+            $this->appertices[] = $appertices;
+            $appertices->addSkills($this);
+        }
+        return $this;
+    }
+    public function removeAppertice(Appertice $appertices): self
+    {
+        if ($this->appertices->contains($appertices)) {
+            $this->appertices->removeElement($appertices);
+            $appertices->removeSkill($this);
+        }
+        return $this;
     }
 }

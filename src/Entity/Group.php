@@ -35,11 +35,9 @@ class Group
     private string $name;
 
     /**
-     * @Assert\Range(
-     *      min = 5,
-     *      max = 10,
-     *      notInRangeMessage = "The minimum number of learned skills {{ min }}and the maximum number of {{ max }}",
-     * )
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
      */
     private int $skillCount;
 

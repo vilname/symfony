@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
@@ -20,6 +21,11 @@ class Appertice
     use DoctrineEntityUpdatedAtTrait;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skills", inversedBy="appertices")
+     */
+    private $skills;
+
+    /**
      * @ORM\Column(name="id", type="bigint", unique=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -33,10 +39,10 @@ class Appertice
      */
     private string $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="ApperticeSkills", mappedBy="appertice_id")
-     */
-    private Collection $apperticeId;
+    public function __construct()
+    {
+        $this->skills = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -70,20 +76,28 @@ class Appertice
         $this->name = $name;
     }
 
-    /**
-     * @return Collection
-     */
-    public function getApperticeId(): Collection
+    public function addSkills(Skills $skills): self
     {
-        return $this->apperticeId;
+        if (!$this->skills->contains($skills)) {
+            $this->skills[] = $skills;
+        }
+        return $this;
     }
 
     /**
-     * @param Collection $apperticeId
+     * @return Collection|Skills[]
      */
-    public function setApperticeId(Collection $apperticeId): void
+    public function getSkills(): Collection
     {
-        $this->apperticeId = $apperticeId;
+        return $this->skills;
+    }
+
+    public function removeSkill(Skills $skills): self
+    {
+        if ($this->skills->contains($skills)) {
+            $this->skills->removeElement($skills);
+        }
+        return $this;
     }
 
 }

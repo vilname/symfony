@@ -30,7 +30,7 @@ class WorldController extends AbstractController
     public function show():Response
     {
 
-    //    $this->apperticeService->findPlace();
+        $a = $this->apperticeService->findPlace();
 
         // echo "<pre>";
         //     print_r($this->apperticeService->findPlace());
@@ -38,7 +38,7 @@ class WorldController extends AbstractController
 
 //        return $this->apperticeService->findPlace();
 
-        $a = $this->teacherService->getTeachers();
+//        $a = $this->teacherService->getTeachers();
 
 //        echo "<pre>";
 //        print_r($a);
