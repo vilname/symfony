@@ -4,28 +4,25 @@
 namespace App\Repository;
 
 use App\Entity\GroupItem;
+use App\Entity\Skill;
 use Doctrine\ORM\EntityRepository;
 
 class ApperticeRepository extends EntityRepository
 {
-    private $maxApperticeGroup = 1;
 
-    // поиск подходящей группы для нового студента
+    // поиск подходящей группы по навыкам студента
     public function findGroup(int $apperticeId): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('ap.skills.skills')
-            ->from($this->getClassName(), 'ap');
-//            ->join(GroupItem::class, 'gi', 'with', 'ap.apperticeId.skillId = gi.skillId');
-//            ->where('ap.id = :id')
-//            ->groupBy('gi.apperticeId, gi.groupId')
-//            ->having('COUNT(\'*\') < :maxApperticeGroup')
-//            ->setParameters(['id' => 1, 'maxApperticeGroup' => $this->maxApperticeGroup]);
-//            ->join('group', 'g')
-//            ->where('ap.apperticeId = :apId')
-//            ->andwhere('g.groupId.skillId = ap.apperticeId.skillId')
-//            ->groupBy('g.groupId')
-//            ->setParameter(':apId', $apperticeId);
+        $qb->select('g.id')
+            ->from($this->getClassName(), 'ap')
+            ->join('ap.apperticeSkill', 's')
+            ->join('App\Entity\GroupItem', 'gi', 'with', 'gi.skillGroupItem = s.id')
+            ->join('gi.groupId', 'g')
+            ->where('ap.id = :id')
+            ->andWhere('g.active = true')
+            ->setParameter('id', $apperticeId)
+            ->groupBy('g.id');
 
         return $qb->getQuery()->getResult();
     }

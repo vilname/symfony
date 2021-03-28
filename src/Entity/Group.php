@@ -42,9 +42,10 @@ class Group
     private int $skillCount;
 
     /**
-     * @ORM\ManyToMany(targetEntity="GroupItem", mappedBy="group_id")
+     * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="groupId")
      */
     private Collection $groupId;
+
 
     /**
      * @var boolean

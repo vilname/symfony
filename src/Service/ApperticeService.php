@@ -3,10 +3,9 @@
 
 namespace App\Service;
 
-
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Appertice;
 use App\Repository\ApperticeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 class ApperticeService
 {

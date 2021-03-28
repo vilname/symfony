@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Table(name="`group_item`")
+ * @ORM\Table(
+ *     name="`group_item`"
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  */
 class GroupItem
@@ -28,28 +30,28 @@ class GroupItem
     private Group $groupId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Appertice", inversedBy="apperticeId")
+     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="skillGroupItem")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="appertice_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="skill_group_item", referencedColumnName="id")
      * })
      */
-    private Appertice $apperticeId;
+    private Skill $skillGroupItem;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Teachers", inversedBy="teacherId")
+     * @ORM\ManyToOne(targetEntity="Appertice", inversedBy="apperticeGroupItem")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="teacher_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="appertice_group_item", referencedColumnName="id")
      * })
      */
-    private Teachers $teacherId;
+    private Appertice $apperticeGroupItem;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Skills", inversedBy="skillId")
+     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="teacherGroupItem")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="skill_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="teacher_group_item", referencedColumnName="id")
      * })
      */
-    private Skills $skillId;
+    private Teacher $teacherGroupItem;
 
     /**
      * @return int
@@ -65,69 +67,5 @@ class GroupItem
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return Appertice
-     */
-    public function getApperticeId(): Appertice
-    {
-        return $this->apperticeId;
-    }
-
-    /**
-     * @param Appertice $apperticeId
-     */
-    public function setApperticeId(Appertice $apperticeId): void
-    {
-        $this->apperticeId = $apperticeId;
-    }
-
-    /**
-     * @return Teachers
-     */
-    public function getTeacherId(): Teachers
-    {
-        return $this->teacherId;
-    }
-
-    /**
-     * @param Teachers $teacherId
-     */
-    public function setTeacherId(Teachers $teacherId): void
-    {
-        $this->teacherId = $teacherId;
-    }
-
-    /**
-     * @return Skills
-     */
-    public function getSkillId(): Skills
-    {
-        return $this->skillId;
-    }
-
-    /**
-     * @param Skills $skillId
-     */
-    public function setSkillId(Skills $skillId): void
-    {
-        $this->skillId = $skillId;
-    }
-
-    /**
-     * @return Group
-     */
-    public function getGroupId(): Group
-    {
-        return $this->groupId;
-    }
-
-    /**
-     * @param Group $groupId
-     */
-    public function setGroupId(Group $groupId): void
-    {
-        $this->groupId = $groupId;
     }
 }

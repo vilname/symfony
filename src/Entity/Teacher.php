@@ -3,18 +3,24 @@
 
 namespace App\Entity;
 
-use DateTime;
+use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
+use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="`teachers`")
- * @ORM\Entity(repositoryClass="App\Repository\TeachersRepository")
+ * @ORM\Table(
+ *     name="`teachers`"
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\TeacherRepository")
  */
-class Teachers
+class Teacher
 {
+    use DoctrineEntityCreatedAtTrait;
+    use DoctrineEntityUpdatedAtTrait;
+
     /**
      * @ORM\Column(name="id", type="bigint", unique=true)
      * @ORM\Id
@@ -44,25 +50,14 @@ class Teachers
     private int $skillCount;
 
     /**
-     * @ORM\ManyToMany(targetEntity="TeachersSkills", mappedBy="teacher_id")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="skillTeacher")
      */
-    private Collection $teacherId;
+    private Skill $teacher;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @Gedmo\Timestampable(on="create")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Group", mappedBy="teacherGroupItem")
      */
-    private DateTime $createdAt;
-
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
-     * @Gedmo\Timestampable(on="update")
-     */
-    private DateTime $updatedAt;
+    private Collection $teacherGroupItem;
 
     /**
      * @return int
@@ -126,38 +121,6 @@ class Teachers
     public function setSkillCount(int $skillCount): void
     {
         $this->skillCount = $skillCount;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt(): DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     */
-    public function setUpdatedAt(DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
     }
 
     public function toArray(): array

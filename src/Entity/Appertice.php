@@ -5,25 +5,23 @@ namespace App\Entity;
 
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use DateTime;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+
+
 /**
- * @ORM\Table(name="`appertice`")
+ * @ORM\Table(
+ *     name="`appertice`"
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ApperticeRepository")
  */
+
 class Appertice
 {
     use DoctrineEntityCreatedAtTrait;
     use DoctrineEntityUpdatedAtTrait;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Skills", inversedBy="appertices")
-     */
-    private $skills;
 
     /**
      * @ORM\Column(name="id", type="bigint", unique=true)
@@ -39,10 +37,15 @@ class Appertice
      */
     private string $name;
 
-    public function __construct()
-    {
-        $this->skills = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
+     */
+    private Skill $apperticeSkill;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
+     */
+    private Collection $apperticeGroupItem;
 
     /**
      * @return int
@@ -76,28 +79,19 @@ class Appertice
         $this->name = $name;
     }
 
-    public function addSkills(Skills $skills): self
+    /**
+     * @return Skill
+     */
+    public function getApperticeSkill(): Skill
     {
-        if (!$this->skills->contains($skills)) {
-            $this->skills[] = $skills;
-        }
-        return $this;
+        return $this->apperticeSkill;
     }
 
     /**
-     * @return Collection|Skills[]
+     * @param Skill $apperticeSkill
      */
-    public function getSkills(): Collection
+    public function setApperticeSkill(Skill $apperticeSkill): void
     {
-        return $this->skills;
+        $this->apperticeSkill = $apperticeSkill;
     }
-
-    public function removeSkill(Skills $skills): self
-    {
-        if ($this->skills->contains($skills)) {
-            $this->skills->removeElement($skills);
-        }
-        return $this;
-    }
-
 }
