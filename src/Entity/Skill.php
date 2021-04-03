@@ -28,7 +28,7 @@ class Skill
     private string $skills;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Appertice", mappedBy="apperticeSkill")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Appertice", mappedBy="apperticeSkill")
      */
     private Collection $apperticeSkill;
 
