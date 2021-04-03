@@ -8,7 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(
- *     name="`group_item`"
+ *     name="`group_item`",
+ *     indexes={
+ *         @ORM\Index(name="group_item__group_id__ind", columns={"group_id"}),
+ *         @ORM\Index(name="group_item__skill_group_item__ind", columns={"skill_group_item"}),
+ *         @ORM\Index(name="group_item__appertice_group_item__ind", columns={"appertice_group_item"}),
+ *         @ORM\Index(name="group_item__teacher_group_item__ind", columns={"teacher_group_item"})
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  */

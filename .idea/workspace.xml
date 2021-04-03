@@ -113,48 +113,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="869d737b-704b-4ccb-be75-4d6af3deb48a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ/schema/public.abK9xQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f/storage_v2/_src_/database/twitter.c6phyQ/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f/storage_v2/_src_/database/twitter.c6phyQ/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f/storage_v2/_src_/database/twitter.c6phyQ/schema/public.abK9xQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/home.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/test/doctrine.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrations/Version20210328134516.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Skill.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210314083058.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210325182224.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/WorldController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WorldController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Appertice.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Appertice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/ApperticeSkills.php_" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Group.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f/storage_v2/_src_/database/twitter.c6phyQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f/storage_v2/_src_/database/twitter.c6phyQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7d40d09-8b65-409b-aac9-dc08f0fa262f/storage_v2/_src_/database/twitter.c6phyQ/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/GroupItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GroupItem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Skills.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Teachers.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/TeachersSkills.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ApperticeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ApperticeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/TeachersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TeacherRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ApperticeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ApperticeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/TeacherService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TeacherService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +269,8 @@
       <workItem from="1616603597022" duration="6842000" />
       <workItem from="1616695118214" duration="2112000" />
       <workItem from="1616834082097" duration="25681000" />
-      <workItem from="1616911777212" duration="22963000" />
+      <workItem from="1616911777212" duration="23088000" />
+      <workItem from="1617467394632" duration="407000" />
     </task>
     <servers />
   </component>
