@@ -23,4 +23,11 @@ class ApperticeService
 
         return $apperticeRepository->findGroup(1);
     }
+
+    public function getAppertices(int $page, int $perPage): array
+    {
+        $apperticeRepository = $this->entityManager->getRepository(Appertice::class);
+
+        return $apperticeRepository->getAppertices($page, $perPage);
+    }
 }

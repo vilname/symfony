@@ -94,4 +94,15 @@ class Appertice
     {
         $this->apperticeSkill = $apperticeSkill;
     }
+
+    /**
+     * @throws JsonException
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
+    }
 }
