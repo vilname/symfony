@@ -44,7 +44,7 @@ class GroupItem
     private Skill $skillGroupItem;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Appertice", inversedBy="apperticeGroupItem")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Appertice", inversedBy="apperticeGroupItem")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="appertice_group_item", referencedColumnName="id")
      * })
@@ -73,5 +73,15 @@ class GroupItem
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getApperticeGroupItem(): Appertice
+    {
+        return $this->apperticeGroupItem;
+    }
+
+    public function setApperticeGroupItem(Appertice $apperticeGroupItem): void
+    {
+        $this->apperticeGroupItem = $apperticeGroupItem;
     }
 }

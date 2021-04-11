@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -39,13 +40,25 @@ class Appertice
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
+     * 
+     * @ORM\JoinTable(
+     *     name="appertice_skill",
+     *     joinColumns={@ORM\JoinColumn(name="appertice_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
+     * )
      */
-    private Skill $apperticeSkill;
+    private Collection $apperticeSkill;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
      */
     private Collection $apperticeGroupItem;
+
+    public function __construct()
+    {
+        $this->apperticeSkill = new ArrayCollection();
+        $this->apperticeGroupItem = new ArrayCollection();
+    }
 
     /**
      * @return int

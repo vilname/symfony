@@ -1576,6 +1576,7 @@ sequence|table|58180|58182|1
     </table>
     <table id="33" parent="15" name="appertice_skill">
       <ObjectId>58145</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>user</Owner>
       <StateNumber>986</StateNumber>
     </table>
