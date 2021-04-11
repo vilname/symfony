@@ -25,4 +25,11 @@ class TeacherService
         return $apperticeRepository->getTeachers(1);
     }
 
+    public function saveTeacher(Teacher $teacher)
+    {
+        $this->entityManager->persist($teacher);
+        $this->entityManager->flush();
+
+        return $teacher->getId();
+    }
 }

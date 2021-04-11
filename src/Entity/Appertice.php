@@ -51,6 +51,11 @@ class Appertice
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
+     * @ORM\JoinTable(
+     *     name="appertice_group_item",
+     *     joinColumns={@ORM\JoinColumn(name="appertice_group_item", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="appertice_group_item", referencedColumnName="id")}
+     * )
      */
     private Collection $apperticeGroupItem;
 
