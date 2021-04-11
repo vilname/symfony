@@ -19,9 +19,23 @@ class ApperticeController
 		$this->apperticeService = $apperticeService;
 	}
 
+	/**
+	 * @Route("", methods={"POST"})
+	 * 
+	 * @throws JsonException
+	 */
 	public function saveApperticeAction(Request $request): Response
 	{
+			$apperticeManager = new Appertice();
 
+			$apperticeManager->setName($request->request->get('name'));
+			$apperticeId = $this->apperticeService->saveAppertice($apperticeManager);
+
+			[$data, $code] = $apperticeId === null ?
+            [['success' => false], 400] :
+            [['success' => true, 'userId' => $apperticeId], 200];
+
+			return new JsonResponse($data, $code);
 	}
 
 	/**
@@ -33,12 +47,13 @@ class ApperticeController
 		$perPage = $request->query->get('perPage');
 
 		$appertices = $this->apperticeService->getAppertices($page ?? 0, $perPage ?? 20);
-		$code = empty($users) ? 204 : 200;
+		$code = empty($appertices) ? 204 : 200;
 
 		return new JsonResponse(
-			['users' => array_map(
-				static fn(Appertice $appertice) => $appertice->toArray(), $appertices)], $code
-			);
+			['appertice' => array_map(
+				static fn(Appertice $appertice) => $appertice->toArray(), $appertices)
+			], $code
+		);
 	}
 
 	/**
@@ -47,13 +62,26 @@ class ApperticeController
 	public function deleteUserAction(int $id): Response
 	{
 
+			$appertice = $this->apperticeService->findApperticeById($id);
+			if ($appertice === null) {
+					return false;
+			}
+
+			$result = $this->apperticeService->deleteAppertice($appertice);
+
+			return new JsonResponse(['success' => $result], $result ? 200 : 404);
 	}
 
 	/**
-     * @Route("", methods={"PATCH"})
-     */
+	 * @Route("", methods={"PATCH"})
+	 */
 	public function updateUserAction(Request $request): Response
 	{
+			$apperticeId = $request->request->get('id');
+			$apperticeManager = new Appertice();
+			$apperticeManager->setName($request->request->get('name'));
+			$result = $this->apperticeService->updateAppertice($apperticeId, $apperticeManager);
 
+			return new JsonResponse(['success' => $result], $result ? 200 : 404);
 	}
 }

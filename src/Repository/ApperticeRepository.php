@@ -40,6 +40,7 @@ class ApperticeRepository extends EntityRepository
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
 
+
         return $qb->getQuery()->getResult();
     }
 }

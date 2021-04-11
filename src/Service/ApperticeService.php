@@ -30,4 +30,41 @@ class ApperticeService
 
         return $apperticeRepository->getAppertices($page, $perPage);
     }
+
+    public function saveAppertice(Appertice $appertice): ?int
+    {
+        $this->entityManager->persist($appertice);
+        $this->entityManager->flush();
+
+        return $appertice->getId();
+    }
+
+    public function updateAppertice(int $apperticeId, Appertice $apperticeItem) 
+    {
+        $apperticeRepository = $this->entityManager->getRepository(Appertice::class);
+        $appertice = $apperticeRepository->find($apperticeId);
+        
+        if ($appertice === null) {
+            return false;
+        }
+        $appertice->setName($apperticeItem->getName());
+
+        return $this->saveAppertice($appertice);
+    }
+
+    public function findApperticeById(int $apperticeId): ?Appertice
+    {
+        $apperticeRepository = $this->entityManager->getRepository(Appertice::class);
+
+
+        return $apperticeRepository->find($apperticeId);
+    }
+
+    public function deleteAppertice(Appertice $appertice): bool
+    {
+        $this->entityManager->remove($appertice);
+        $this->entityManager->flush();
+
+        return true;
+    }
 }
