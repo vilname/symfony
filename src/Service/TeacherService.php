@@ -17,12 +17,12 @@ class TeacherService
         $this->entityManager = $entityManager;
     }
 
-    public function getTeachers()
+    public function findTeachers()
     {
-        /** @var TeacherRepository $apperticeRepository */
-        $apperticeRepository = $this->entityManager->getRepository(Teacher::class);
+        /** @var TeacherRepository $teacherRepository */
+        $teacherRepository = $this->entityManager->getRepository(Teacher::class);
 
-        return $apperticeRepository->getTeachers(1);
+        return $teacherRepository->findTeachers();
     }
 
     public function saveTeacher(Teacher $teacher)
@@ -31,5 +31,40 @@ class TeacherService
         $this->entityManager->flush();
 
         return $teacher->getId();
+    }
+
+    /**
+     * @return Teacher[]
+     */
+    public function getTeacher(int $page, int $perPage): array
+    {
+        /** @var TeacherRepository $teacherRepository */
+        $teacherRepositury = $this->entityManager->getRepository(Teacher::class);
+        return $teacherRepositury->getTeacher($page, $perPage);
+    }
+
+    public function findTeacherById(int $teacherId): ?Teacher
+    {
+        $teacherRepositury = $this->entityManager->getRepository(Teacher::class);
+        return $teacherRepositury->find($teacherId);
+    }
+
+    public function deleteTeacher(Teacher $teacher): bool
+    {
+        $this->entityManager->remove($teacher);
+        $this->entityManager->flush();
+
+        return true;
+    }
+
+    public function updateTeacher(int $teacherId): bool
+    {
+        $teacherRepository = $this->entityManager->getRepository(Teacher::class);
+        $teacher = $teacherRepository->find($teacherId);
+        if ($teacher === null) {
+            return false;
+        }
+
+        return $this->saveTeacher($teacher);
     }
 }

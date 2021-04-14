@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
 class TeacherRepository extends EntityRepository
 {
     // поиск преподавателя для группы
-    public function getTeachers(int $page): array
+    public function findTeachers(): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t.name')
@@ -20,7 +20,16 @@ class TeacherRepository extends EntityRepository
             ->having('COUNT(\'*\') < t.groupCount');
 
         return $qb->getQuery()->getResult();
-
     }
 
+    public function getTeacher(int $page, int $perPage): array{
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('t')
+            ->from($this->getClassName(), 't')
+            ->orderBy('t.id', 'DESC')
+            ->setFirstResult($perPage * $page)
+            ->setMaxResults($perPage);
+
+        return $qb->getQuery()->getResult();
+    }
 }

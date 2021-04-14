@@ -56,21 +56,21 @@ class ApperticeController
 		);
 	}
 
-	/**
-     * @Route("/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
-     */
-	public function deleteUserAction(int $id): Response
-	{
+	// /**
+  //    * @Route("/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
+  //    */
+	// public function deleteApperticeAction(int $id): Response
+	// {
 
-			$appertice = $this->apperticeService->findApperticeById($id);
-			if ($appertice === null) {
-					return false;
-			}
+	// 		$appertice = $this->apperticeService->findApperticeById($id);
+	// 		if ($appertice === null) {
+	// 				return false;
+	// 		}
 
-			$result = $this->apperticeService->deleteAppertice($appertice);
+	// 		$result = $this->apperticeService->deleteAppertice($appertice);
 
-			return new JsonResponse(['success' => $result], $result ? 200 : 404);
-	}
+	// 		return new JsonResponse(['success' => $result], $result ? 200 : 404);
+	// }
 
 	/**
 	 * @Route("", methods={"PATCH"})

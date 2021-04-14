@@ -11,12 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  *     name="`group_item`",
  *     indexes={
  *         @ORM\Index(name="group_item__group_id__ind", columns={"group_id"}),
- *         @ORM\Index(name="group_item__skill_group_item__ind", columns={"skill_group_item"}),
- *         @ORM\Index(name="group_item__appertice_group_item__ind", columns={"appertice_group_item"}),
- *         @ORM\Index(name="group_item__teacher_group_item__ind", columns={"teacher_group_item"})
+ *         @ORM\Index(name="group_item__appertice__ind", columns={"appertice"}),
+ *         @ORM\Index(name="group_item__skill__ind", columns={"skill"}),
+ *         @ORM\Index(name="group_item__teacher__ind", columns={"teacher"})
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GroupItemRepository")
  */
 class GroupItem
 {
@@ -27,37 +27,30 @@ class GroupItem
      */
     private int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="groupId")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     * })
-     */
-    private Group $groupId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="skillGroupItem")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="skill_group_item", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity=Appertice::class, inversedBy="groupItem")
+     * @ORM\JoinColumn(name="appertice")
      */
-    private Skill $skillGroupItem;
+    private $appertice;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Appertice", inversedBy="apperticeGroupItem")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="appertice_group_item", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity=Group::class, inversedBy="groupItem")
+     * @ORM\JoinColumn(name="group_id", nullable=false)
      */
-    private Appertice $apperticeGroupItem;
+    private $groupId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Teacher", inversedBy="teacherGroupItem")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="teacher_group_item", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity=Skill::class, inversedBy="groupItem")
+     * @ORM\JoinColumn(name="skill")
      */
-    private Teacher $teacherGroupItem;
+    private $skill;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Teacher::class, inversedBy="groupItem")
+     * @ORM\JoinColumn(name="teacher")
+     */
+    private $teacher;
 
     /**
      * @return int
@@ -75,13 +68,52 @@ class GroupItem
         $this->id = $id;
     }
 
-    public function getApperticeGroupItem(): Appertice
+    public function getAppertice(): ?Appertice
     {
-        return $this->apperticeGroupItem;
+        return $this->appertice;
     }
 
-    public function setApperticeGroupItem(Appertice $apperticeGroupItem): void
+    public function setAppertice(?Appertice $appertice): self
     {
-        $this->apperticeGroupItem = $apperticeGroupItem;
+        $this->appertice = $appertice;
+
+        return $this;
     }
+
+    public function getGroupId(): ?Group
+    {
+        return $this->groupId;
+    }
+
+    public function setGroupId(?Group $groupId): self
+    {
+        $this->groupId = $groupId;
+
+        return $this;
+    }
+
+    public function getSkill(): ?Skill
+    {
+        return $this->skill;
+    }
+
+    public function setSkill(?Skill $skill): self
+    {
+        $this->skill = $skill;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
 }

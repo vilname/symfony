@@ -50,19 +50,20 @@ class Appertice
     private Collection $apperticeSkill;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
-     * @ORM\JoinTable(
-     *     name="appertice_group_item",
-     *     joinColumns={@ORM\JoinColumn(name="appertice_group_item", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="appertice_group_item", referencedColumnName="id")}
-     * )
+     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="appertice")
      */
-    private Collection $apperticeGroupItem;
+    private $groupItem;
+
+    // /**
+    //  * @ORM\OneToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
+    //  */
+    // private Collection $apperticeGroupItem;
 
     public function __construct()
     {
         $this->apperticeSkill = new ArrayCollection();
-        $this->apperticeGroupItem = new ArrayCollection();
+        // $this->apperticeGroupItem = new ArrayCollection();
+        $this->groupItem = new ArrayCollection();
     }
 
     /**
@@ -122,5 +123,35 @@ class Appertice
             'id' => $this->id,
             'name' => $this->name
         ];
+    }
+
+    /**
+     * @return Collection|GroupItem[]
+     */
+    public function getGroupItem(): Collection
+    {
+        return $this->groupItem;
+    }
+
+    public function addGroupItem(GroupItem $groupItem): self
+    {
+        if (!$this->groupItem->contains($groupItem)) {
+            $this->groupItem[] = $groupItem;
+            $groupItem->setAppertice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupItem(GroupItem $groupItem): self
+    {
+        if ($this->groupItem->removeElement($groupItem)) {
+            // set the owning side to null (unless already changed)
+            if ($groupItem->getAppertice() === $this) {
+                $groupItem->setAppertice(null);
+            }
+        }
+
+        return $this;
     }
 }

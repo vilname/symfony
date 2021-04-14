@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -52,12 +53,17 @@ class Teacher
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="skillTeacher")
      */
-    private Skill $teacher;
+    private Collection $teacher;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Group", mappedBy="teacherGroupItem")
+     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="teacher")
      */
-    private Collection $teacherGroupItem;
+    private $groupItem;
+
+    public function __construct()
+    {
+        $this->groupItem = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -126,8 +132,39 @@ class Teacher
     public function toArray(): array
     {
         return [
-            'id' => 111111111,
-            'login' => 'test',
+            'id' => $this->id,
+            'name' => $this->name,
+            'groupCount' => $this->groupCount
         ];
+    }
+
+    /**
+     * @return Collection|GroupItem[]
+     */
+    public function getGroupItem(): Collection
+    {
+        return $this->groupItem;
+    }
+
+    public function addGroupItem(GroupItem $groupItem): self
+    {
+        if (!$this->groupItem->contains($groupItem)) {
+            $this->groupItem[] = $groupItem;
+            $groupItem->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupItem(GroupItem $groupItem): self
+    {
+        if ($this->groupItem->removeElement($groupItem)) {
+            // set the owning side to null (unless already changed)
+            if ($groupItem->getTeacher() === $this) {
+                $groupItem->setTeacher(null);
+            }
+        }
+
+        return $this;
     }
 }
