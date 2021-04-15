@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api\v1;
 
-
+use App\Entity\GroupItem;
 use App\Service\GroupItemService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,32 +26,45 @@ class GroupItemController
 	 */
 	public function saveGroupItemAction(Request $request): Response
 	{
-			$apperticeId = $this->groupItemService->saveGroupItem($request);
 
-			[$data, $code] = $apperticeId === null ?
-            [['success' => false], 400] :
-            [['success' => true], 200];
+		$groupItemManager = new GroupItem();
 
-			return new JsonResponse($data, $code);
+		$appertice = $this->entityManager->getRepository(Appertice::class)->find($request->request->get('appertice'));
+		$groupId = $this->entityManager->getRepository(Group::class)->find($request->request->get('group_id'));
+		$skill = $this->entityManager->getRepository(Skill::class)->find($request->request->get('skill'));
+		$teacher = $this->entityManager->getRepository(Teacher::class)->find($request->request->get('teacher'));
+
+		$groupItemManager->setAppertice($appertice);
+		$groupItemManager->setGroupId($groupId);
+		$groupItemManager->setSkill($skill);
+		$groupItemManager->setTeacher($teacher);
+
+        $apperticeId = $this->groupItemService->saveGroupItem($groupItemManager);
+
+        [$data, $code] = $apperticeId === null ?
+        [['success' => false], 400] :
+        [['success' => true], 200];
+
+        return new JsonResponse($data, $code);
 	}
 
-	// /**
-  //    * @Route("", methods={"GET"})
-  //    */
-	// public function getApperticeAction(Request $request): Response
-	// {
-	// 	$page = $request->query->get('page');
-	// 	$perPage = $request->query->get('perPage');
+	/**
+     * @Route("", methods={"GET"})
+     */
+	public function getGroupItemAction(Request $request): Response
+	{
+		$page = $request->query->get('page');
+		$perPage = $request->query->get('perPage');
 
-	// 	$appertices = $this->apperticeService->getAppertices($page ?? 0, $perPage ?? 20);
-	// 	$code = empty($appertices) ? 204 : 200;
+		$groupItems = $this->groupItemService->getGroupItems($page ?? 0, $perPage ?? 20);
+		$code = empty($groupItems) ? 204 : 200;
 
-	// 	return new JsonResponse(
-	// 		['appertice' => array_map(
-	// 			static fn(Appertice $appertice) => $appertice->toArray(), $appertices)
-	// 		], $code
-	// 	);
-	// }
+		return new JsonResponse(
+			['group_item' => array_map(
+				static fn(GroupItem $groupItem) => $groupItem->toArray(), $groupItems)
+			], $code
+		);
+	}
 
 	/**
      * @Route("/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
@@ -69,16 +82,14 @@ class GroupItemController
 			return new JsonResponse(['success' => $result], $result ? 200 : 404);
 	}
 
-	// /**
-	//  * @Route("", methods={"PATCH"})
-	//  */
-	// public function updateUserAction(Request $request): Response
-	// {
-	// 		$apperticeId = $request->request->get('id');
-	// 		$apperticeManager = new Appertice();
-	// 		$apperticeManager->setName($request->request->get('name'));
-	// 		$result = $this->apperticeService->updateAppertice($apperticeId, $apperticeManager);
+	/**
+	 * @Route("", methods={"PATCH"})
+	 */
+	public function updateUserAction(Request $request): Response
+	{
+			
+			$result = $this->groupItemService->updateGroupItem($request);
 
-	// 		return new JsonResponse(['success' => $result], $result ? 200 : 404);
-	// }
+			return new JsonResponse(['success' => $result], $result ? 200 : 404);
+	}
 }

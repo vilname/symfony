@@ -6,12 +6,7 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Appertice;
-use App\Entity\Group;
 use App\Entity\GroupItem;
-use App\Entity\Skill;
-use App\Entity\Teacher;
-
-// use App\Repository\GroupItemRepository;
 
 class GroupItemService
 {
@@ -22,46 +17,36 @@ class GroupItemService
         $this->entityManager = $entityManager;
     }
 
-
-    // public function getAppertices(int $page, int $perPage): array
-    // {
-    //     $apperticeRepository = $this->entityManager->getRepository(Appertice::class);
-
-    //     return $apperticeRepository->getAppertices($page, $perPage);
-    // }
-
-    public function saveGroupItem(Request $request): ?int
+    public function getGroupItems(int $page, int $perPage): array
     {
-        $groupItemManager = new GroupItem();
+        $groupItemRepository = $this->entityManager->getRepository(GroupItem::class);
 
-        $appertice = $this->entityManager->getRepository(Appertice::class)->find($request->request->get('appertice'));
-        $groupId = $this->entityManager->getRepository(Group::class)->find($request->request->get('group_id'));
-        $skill = $this->entityManager->getRepository(Skill::class)->find($request->request->get('skill'));
-        $teacher = $this->entityManager->getRepository(Teacher::class)->find($request->request->get('teacher'));
+        return $groupItemRepository->getGroupItems($page, $perPage);
+    }
 
-        $groupItemManager->setAppertice($appertice);
-        $groupItemManager->setGroupId($groupId);
-        $groupItemManager->setSkill($skill);
-        $groupItemManager->setTeacher($teacher);
-
+    public function saveGroupItem(GroupItem $groupItemManager): ?int
+    {
         $this->entityManager->persist($groupItemManager);
         $this->entityManager->flush();
 
         return $groupItemManager->getId();
     }
 
-    // public function updateAppertice(int $apperticeId, Appertice $apperticeItem) 
-    // {
-    //     $apperticeRepository = $this->entityManager->getRepository(Appertice::class);
-    //     $appertice = $apperticeRepository->find($apperticeId);
+    public function updateGroupItem(Request $request) 
+    {
+        $groupItemRepository = $this->entityManager->getRepository(GroupItem::class);
+        $appertice = $this->entityManager->getRepository(Appertice::class)
+                                            ->find($request->request->get('appertice_id'));
         
-    //     if ($appertice === null) {
-    //         return false;
-    //     }
-    //     $appertice->setName($apperticeItem->getName());
+        $groupItem = $groupItemRepository->find($request->request->get('id'));
+        
+        if ($groupItem === null) {
+            return false;
+        }
+        $groupItem->setAppertice($appertice);
 
-    //     return $this->saveAppertice($appertice);
-    // }
+        return $this->saveGroupItem($groupItem);
+    }
 
     public function findGroupItemById(int $groupItemId): ?GroupItem
     {

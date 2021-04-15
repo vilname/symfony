@@ -116,4 +116,14 @@ class GroupItem
         return $this;
     }
 
+        /**
+     * @throws JsonException
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id
+        ];
+    }
+
 }

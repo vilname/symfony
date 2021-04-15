@@ -33,7 +33,7 @@ class ApperticeController
 
 			[$data, $code] = $apperticeId === null ?
             [['success' => false], 400] :
-            [['success' => true, 'userId' => $apperticeId], 200];
+            [['success' => true], 200];
 
 			return new JsonResponse($data, $code);
 	}
@@ -56,26 +56,10 @@ class ApperticeController
 		);
 	}
 
-	// /**
-  //    * @Route("/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
-  //    */
-	// public function deleteApperticeAction(int $id): Response
-	// {
-
-	// 		$appertice = $this->apperticeService->findApperticeById($id);
-	// 		if ($appertice === null) {
-	// 				return false;
-	// 		}
-
-	// 		$result = $this->apperticeService->deleteAppertice($appertice);
-
-	// 		return new JsonResponse(['success' => $result], $result ? 200 : 404);
-	// }
-
 	/**
 	 * @Route("", methods={"PATCH"})
 	 */
-	public function updateUserAction(Request $request): Response
+	public function updateApperticeAction(Request $request): Response
 	{
 			$apperticeId = $request->request->get('id');
 			$apperticeManager = new Appertice();
