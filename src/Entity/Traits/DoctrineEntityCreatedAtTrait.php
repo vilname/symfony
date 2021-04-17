@@ -3,29 +3,25 @@
 
 namespace App\Entity\Traits;
 
-use DateTimeInterface;
+use DateTime;
 use Doctrine\ORM\Mapping\Column;
 
 trait DoctrineEntityCreatedAtTrait
 {
     /**
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * 
+     * @Gedmo\Timestampable(on="create")
      */
-    private $createdAt;
+    private DateTime $createdAt;
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTimeInterface $createdAt
-     */
-    public function setCreatedAt($createdAt): void
+    public function setCreatedAt(): void
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new DateTime();
     }
 }

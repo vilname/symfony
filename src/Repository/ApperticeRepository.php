@@ -26,4 +26,21 @@ class ApperticeRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return Appertice[]
+     */
+    public function getAppertices(int $page, int $perPage): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('ap')
+            ->from($this->getClassName(), 'ap')
+            ->orderBy('ap.id', 'DESC')
+            ->setFirstResult($perPage * $page)
+            ->setMaxResults($perPage);
+
+
+        return $qb->getQuery()->getResult();
+    }
 }

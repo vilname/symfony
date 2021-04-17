@@ -3,29 +3,25 @@
 
 namespace App\Entity\Traits;
 
-use DateTimeInterface;
+use DateTime;
 use Doctrine\ORM\Mapping\Column;
 
 trait DoctrineEntityUpdatedAtTrait
 {
     /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * 
+     * @Gedmo\Timestampable(on="update")
      */
-    private $updatedAt;
+    private DateTime $updatedAt;
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTimeInterface $updatedAt
-     */
-    public function setUpdatedAt($updatedAt): void
+    public function setUpdatedAt(): void
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new DateTime();
     }
 }

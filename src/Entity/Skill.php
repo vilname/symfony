@@ -39,13 +39,14 @@ class Skill
     private Collection $skillTeacher;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="skillGroupItem")
+     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="skill")
      */
-    private Collection $skillGroupItem;
+    private $groupItem;
 
     public function __construct()
     {
         $this->skillAppertice = new ArrayCollection();
+        $this->groupItem = new ArrayCollection();
     }
 
     /**
@@ -65,26 +66,56 @@ class Skill
     }
 
     /**
+    * @return string
+    */
+    public function getSkill(): string
+    {
+        return $this->skill;
+    }
+
+    /**
+    * @param string $skill
+    */
+    public function setSkill(string $skill): void
+    {
+        $this->skill = $skill;
+    }
+
+    /**
      * @return Collection|Appertice[]
      */
     public function getArticles(): Collection
     {
         return $this->skillAppertice;
     }
-    public function addSkillAppertice(Appertice $skillAppertice): self
+
+    /**
+     * @return Collection|GroupItem[]
+     */
+    public function getGroupItem(): Collection
     {
-        if (!$this->skillAppertice->contains($skillAppertice)) {
-            $this->skillAppertice[] = $skillAppertice;
-            $skillAppertice->addSkills($this);
+        return $this->groupItem;
+    }
+
+    public function addGroupItem(GroupItem $groupItem): self
+    {
+        if (!$this->groupItem->contains($groupItem)) {
+            $this->groupItem[] = $groupItem;
+            $groupItem->setSkill($this);
         }
+
         return $this;
     }
-    public function removeSkillAppertice(Appertice $skillAppertice): self
+
+    public function removeGroupItem(GroupItem $groupItem): self
     {
-        if ($this->skillAppertice->contains($skillAppertice)) {
-            $this->skillAppertice->removeElement($skillAppertice);
-            $skillAppertice->removeSkill($this);
+        if ($this->groupItem->removeElement($groupItem)) {
+            // set the owning side to null (unless already changed)
+            if ($groupItem->getSkill() === $this) {
+                $groupItem->setSkill(null);
+            }
         }
+
         return $this;
     }
 

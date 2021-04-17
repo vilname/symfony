@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -39,13 +40,31 @@ class Appertice
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
+     * 
+     * @ORM\JoinTable(
+     *     name="appertice_skill",
+     *     joinColumns={@ORM\JoinColumn(name="appertice_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
+     * )
      */
-    private Skill $apperticeSkill;
+    private Collection $apperticeSkill;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
+     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="appertice")
      */
-    private Collection $apperticeGroupItem;
+    private $groupItem;
+
+    // /**
+    //  * @ORM\OneToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
+    //  */
+    // private Collection $apperticeGroupItem;
+
+    public function __construct()
+    {
+        $this->apperticeSkill = new ArrayCollection();
+        // $this->apperticeGroupItem = new ArrayCollection();
+        $this->groupItem = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -93,5 +112,46 @@ class Appertice
     public function setApperticeSkill(Skill $apperticeSkill): void
     {
         $this->apperticeSkill = $apperticeSkill;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
+    }
+
+    /**
+     * @return Collection|GroupItem[]
+     */
+    public function getGroupItem(): Collection
+    {
+        return $this->groupItem;
+    }
+
+    public function addGroupItem(GroupItem $groupItem): self
+    {
+        if (!$this->groupItem->contains($groupItem)) {
+            $this->groupItem[] = $groupItem;
+            $groupItem->setAppertice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupItem(GroupItem $groupItem): self
+    {
+        if ($this->groupItem->removeElement($groupItem)) {
+            // set the owning side to null (unless already changed)
+            if ($groupItem->getAppertice() === $this) {
+                $groupItem->setAppertice(null);
+            }
+        }
+
+        return $this;
     }
 }

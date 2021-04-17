@@ -6,6 +6,7 @@ namespace App\Entity;
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -41,11 +42,6 @@ class Group
      */
     private int $skillCount;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\GroupItem", mappedBy="groupId")
-     */
-    private Collection $groupId;
-
 
     /**
      * @var boolean
@@ -53,6 +49,16 @@ class Group
      * @ORM\Column(type="boolean")
      */
     private bool $active;
+
+    /**
+     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="groupId", orphanRemoval=true)
+     */
+    private $groupItem;
+
+    public function __construct()
+    {
+        $this->groupItem = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -116,5 +122,35 @@ class Group
     public function setActive(bool $active): void
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return Collection|GroupItem[]
+     */
+    public function getGroupItem(): Collection
+    {
+        return $this->groupItem;
+    }
+
+    public function addGroupItem(GroupItem $groupItem): self
+    {
+        if (!$this->groupItem->contains($groupItem)) {
+            $this->groupItem[] = $groupItem;
+            $groupItem->setGroupId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupItem(GroupItem $groupItem): self
+    {
+        if ($this->groupItem->removeElement($groupItem)) {
+            // set the owning side to null (unless already changed)
+            if ($groupItem->getGroupId() === $this) {
+                $groupItem->setGroupId(null);
+            }
+        }
+
+        return $this;
     }
 }
