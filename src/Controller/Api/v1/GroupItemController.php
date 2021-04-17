@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\v1;
 
+use App\DTO\GroupItemDTO;
 use App\Entity\GroupItem;
 use App\Service\GroupItemService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,26 +27,14 @@ class GroupItemController
 	 */
 	public function saveGroupItemAction(Request $request): Response
 	{
+			$groupItemEntitny = (new GroupItemDTO($request))->getData();
+			$apperticeId = $this->groupItemService->saveGroupItem($groupItemEntitny);
 
-		$groupItemManager = new GroupItem();
+			[$data, $code] = $apperticeId === null ?
+			[['success' => false], 400] :
+			[['success' => true], 200];
 
-		$appertice = $this->entityManager->getRepository(Appertice::class)->find($request->request->get('appertice'));
-		$groupId = $this->entityManager->getRepository(Group::class)->find($request->request->get('group_id'));
-		$skill = $this->entityManager->getRepository(Skill::class)->find($request->request->get('skill'));
-		$teacher = $this->entityManager->getRepository(Teacher::class)->find($request->request->get('teacher'));
-
-		$groupItemManager->setAppertice($appertice);
-		$groupItemManager->setGroupId($groupId);
-		$groupItemManager->setSkill($skill);
-		$groupItemManager->setTeacher($teacher);
-
-        $apperticeId = $this->groupItemService->saveGroupItem($groupItemManager);
-
-        [$data, $code] = $apperticeId === null ?
-        [['success' => false], 400] :
-        [['success' => true], 200];
-
-        return new JsonResponse($data, $code);
+			return new JsonResponse($data, $code);
 	}
 
 	/**

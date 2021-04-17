@@ -26,11 +26,8 @@ class SkillController
      */
     public function saveUserAction(Request $request): Response
     {
-        $skillManager = new Skill();
-        $skillManager->setName($request->request->get('name'));
-        $skillManager->setName($request->request->get('group_count'));
-
-        $skillId = $this->teacherService->saveTeacher($skillManager);
+        $skillEntitny = $this->skillService->changeDataBeforeSave($request);
+        $skillId = $this->teacherService->saveTeacher($skillEntitny);
         [$data, $code] = $skillId === null ?
             [['success' => false], 400] :
             [['success' => true, 'userId' => $skillId], 200];
@@ -50,17 +47,6 @@ class SkillController
 
         return new JsonResponse(['skills' => array_map(static fn(Skill $skill) => $skill->toArray(), $skills)], $code);
     }
-
-    // /**
-    //  * @Route("/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
-    //  */
-    // public function deleteUserAction(int $id): Response
-    // {
-    //     $skill = $this->skillService->findUserById($id);
-    //     $result = $this->skillService->deleteTeacher($skill);
-
-    //     return new JsonResponse(['success' => $result], $result ? 200 : 404);
-    // }
 
     /**
      * @Route("", methods={"PATCH"})

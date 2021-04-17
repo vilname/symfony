@@ -26,10 +26,10 @@ class ApperticeController
 	 */
 	public function saveApperticeAction(Request $request): Response
 	{
-			$apperticeManager = new Appertice();
+			$apperticeEntity = new Appertice();
 
-			$apperticeManager->setName($request->request->get('name'));
-			$apperticeId = $this->apperticeService->saveAppertice($apperticeManager);
+			$apperticeEntity->setName($request->request->get('name'));
+			$apperticeId = $this->apperticeService->saveAppertice($apperticeEntity);
 
 			[$data, $code] = $apperticeId === null ?
             [['success' => false], 400] :

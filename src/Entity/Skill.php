@@ -66,28 +66,28 @@ class Skill
     }
 
     /**
+    * @return string
+    */
+    public function getSkill(): string
+    {
+        return $this->skill;
+    }
+
+    /**
+    * @param string $skill
+    */
+    public function setSkill(string $skill): void
+    {
+        $this->skill = $skill;
+    }
+
+    /**
      * @return Collection|Appertice[]
      */
     public function getArticles(): Collection
     {
         return $this->skillAppertice;
     }
-    // public function addSkillAppertice(Appertice $skillAppertice): self
-    // {
-    //     if (!$this->skillAppertice->contains($skillAppertice)) {
-    //         $this->skillAppertice[] = $skillAppertice;
-    //         $skillAppertice->addSkills($this);
-    //     }
-    //     return $this;
-    // }
-    // public function removeSkillAppertice(Appertice $skillAppertice): self
-    // {
-    //     if ($this->skillAppertice->contains($skillAppertice)) {
-    //         $this->skillAppertice->removeElement($skillAppertice);
-    //         $skillAppertice->removeSkill($this);
-    //     }
-    //     return $this;
-    // }
 
     /**
      * @return Collection|GroupItem[]

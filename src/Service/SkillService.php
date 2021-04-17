@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Skill;
 use App\Repository\SkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class SkillService
 {
@@ -33,6 +34,14 @@ class SkillService
         /** @var SkillRepository $skillRepository */
         $skillRepositury = $this->entityManager->getRepository(Skill::class);
         return $skillRepositury->getSkill($page, $perPage);
+    }
+
+    public function changeDataBeforeSave(Request $request)
+    {
+        $skillEntitny = new Skill();
+        $skillEntitny->setSkill($request->request->get('skill'));
+
+        return $skillEntitny;
     }
 
     public function findSkillById(int $skillId): ?Skill

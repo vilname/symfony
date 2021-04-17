@@ -26,11 +26,9 @@ class TeacherController
      */
     public function saveUserAction(Request $request): Response
     {
-        $teacherManager = new Teacher();
-        $teacherManager->setName($request->request->get('name'));
-        $teacherManager->setName($request->request->get('group_count'));
+        $teacherEntity = $this->teacherService->changeDataBeforeSave($request);
 
-        $teacherId = $this->teacherService->saveTeacher($teacherManager);
+        $teacherId = $this->teacherService->saveTeacher($teacherEntity);
         [$data, $code] = $teacherId === null ?
             [['success' => false], 400] :
             [['success' => true, 'userId' => $teacherId], 200];
@@ -50,17 +48,6 @@ class TeacherController
 
         return new JsonResponse(['teachers' => array_map(static fn(Teacher $teacher) => $teacher->toArray(), $teachers)], $code);
     }
-
-    // /**
-    //  * @Route("/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
-    //  */
-    // public function deleteTeacherAction(int $id): Response
-    // {
-    //     $user = $this->teacherService->findTeacherById($id);
-    //     $result = $this->teacherService->deleteTeacher($user);
-
-    //     return new JsonResponse(['success' => $result], $result ? 200 : 404);
-    // }
 
     /**
      * @Route("", methods={"PATCH"})

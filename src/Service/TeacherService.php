@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Teacher;
 use App\Repository\TeacherRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class TeacherService
 {
@@ -41,6 +42,14 @@ class TeacherService
         /** @var TeacherRepository $teacherRepository */
         $teacherRepositury = $this->entityManager->getRepository(Teacher::class);
         return $teacherRepositury->getTeacher($page, $perPage);
+    }
+
+    public function changeDataBeforeSave(Request $request)
+    {
+        $teacherEntitny = new Teacher();
+        $teacherEntitny->setName($request->request->get('name'));
+
+        return $teacherEntitny;
     }
 
     public function findTeacherById(int $teacherId): ?Teacher
