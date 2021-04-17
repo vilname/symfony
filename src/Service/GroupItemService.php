@@ -32,14 +32,14 @@ class GroupItemService
         return $groupItemManager->getId();
     }
 
-    public function updateGroupItem(Request $request) 
+    public function updateGroupItem(Request $request)
     {
         $groupItemRepository = $this->entityManager->getRepository(GroupItem::class);
         $appertice = $this->entityManager->getRepository(Appertice::class)
-                                            ->find($request->request->get('appertice_id'));
-        
+            ->find($request->request->get('appertice_id'));
+
         $groupItem = $groupItemRepository->find($request->request->get('id'));
-        
+
         if ($groupItem === null) {
             return false;
         }

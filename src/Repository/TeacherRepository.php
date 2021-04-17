@@ -22,7 +22,8 @@ class TeacherRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getTeacher(int $page, int $perPage): array{
+    public function getTeacher(int $page, int $perPage): array
+    {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t')
             ->from($this->getClassName(), 't')

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /** @Route("/api/v1/teacher") */
-class TeacherController 
+class TeacherController
 {
     private TeacherService $teacherService;
 

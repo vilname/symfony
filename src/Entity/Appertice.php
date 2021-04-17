@@ -11,14 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 
-
 /**
  * @ORM\Table(
  *     name="`appertice`"
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ApperticeRepository")
  */
-
 class Appertice
 {
     use DoctrineEntityCreatedAtTrait;
@@ -40,7 +38,7 @@ class Appertice
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
-     * 
+     *
      * @ORM\JoinTable(
      *     name="appertice_skill",
      *     joinColumns={@ORM\JoinColumn(name="appertice_id", referencedColumnName="id")},
@@ -53,11 +51,6 @@ class Appertice
      * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="appertice")
      */
     private $groupItem;
-
-    // /**
-    //  * @ORM\OneToMany(targetEntity="App\Entity\GroupItem", mappedBy="apperticeGroupItem")
-    //  */
-    // private Collection $apperticeGroupItem;
 
     public function __construct()
     {

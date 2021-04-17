@@ -113,11 +113,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="869d737b-704b-4ccb-be75-4d6af3deb48a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/home.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/home.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/controllers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/ApperticeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/ApperticeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/GroupItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/GroupItemController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/SkillController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/SkillController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Appertice.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Appertice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/GroupItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GroupItem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/GroupItemRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/GroupItemRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/SkillRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SkillRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TeacherRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TeacherRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/GroupItemService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/GroupItemService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,6 +215,7 @@
       <path value="$PROJECT_DIR$/vendor/behat/transliterator" />
       <path value="$PROJECT_DIR$/vendor/stof/doctrine-extensions-bundle" />
       <path value="$PROJECT_DIR$/vendor/gedmo/doctrine-extensions" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
     </include_path>
   </component>
   <component name="ProjectId" id="1p3RPHumc3R5FIGB3ETtVZXNYfv" />
@@ -272,6 +281,7 @@
       <workItem from="1617467394632" duration="407000" />
       <workItem from="1617473937488" duration="245000" />
       <workItem from="1618035915892" duration="386000" />
+      <workItem from="1618663060687" duration="162000" />
     </task>
     <servers />
   </component>
