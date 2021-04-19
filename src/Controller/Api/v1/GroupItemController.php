@@ -27,7 +27,7 @@ class GroupItemController
      */
     public function saveGroupItemAction(Request $request): Response
     {
-        $groupItemEntitny = (new GroupItemDTO($request))->getData();
+        $groupItemEntitny = (new GroupItemDTO())->getData($request);
         $apperticeId = $this->groupItemService->saveGroupItem($groupItemEntitny);
 
         [$data, $code] = $apperticeId === null ?
