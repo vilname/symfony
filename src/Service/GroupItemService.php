@@ -5,19 +5,27 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use App\Entity\Appertice;
 use App\Entity\Group;
 use App\Entity\GroupItem;
 use App\Entity\Skill;
 use App\Entity\Teacher;
+use App\Symfony\Forms\GroupItemType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class GroupItemService
 {
     private EntityManagerInterface $entityManager;
+    private $formFactory;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory)
     {
         $this->entityManager = $entityManager;
+        $this->formFactory = $formFactory;
     }
 
     public function getGroupItems(int $page, int $perPage): array
@@ -50,6 +58,22 @@ class GroupItemService
         $this->entityManager->flush();
 
         return $groupItemManager->getId();
+    }
+
+    public function gerSaveForm(): FormInterface
+    {
+        return $this->formFactory->createBuilder(FormType::class)
+            ->add('id', IntegerType::class)
+            ->add('appertice', CollectionType::class, [
+                // 'required' => false,
+                'entry_type' => GroupItemType::class,
+                // 'entry_options' => ['label' => false],
+                'allow_add' => true,
+                ])
+            // ->add('groupId', CollectionType::class)
+            // ->add('skill', CollectionType::class, ['required' => false])
+            // ->add('teacher', CollectionType::class, ['required' => false])
+            ->getForm();
     }
 
     public function updateGroupItem(Request $request)

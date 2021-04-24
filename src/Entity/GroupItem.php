@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -68,16 +69,28 @@ class GroupItem
         $this->id = $id;
     }
 
-    public function getAppertice(): ?Appertice
+    /**
+     * @return Collection
+     */
+    public function getAppertice(): Collection
     {
         return $this->appertice;
     }
 
-    public function setAppertice(?Appertice $appertice): self
+    /**
+     * @param Collection $appertice
+     */
+    public function setAppertice(Collection $appertice): void
     {
         $this->appertice = $appertice;
+    }
 
-        return $this;
+    public function addAppertice(Appertice $appertice) {
+        $this->appertice->add($appertice);
+    }
+
+    public function removeAppertice(Appertice $appertice) {
+        $this->appertice->removeElement($appertice);
     }
 
     public function getGroupId(): ?Group

@@ -2,22 +2,24 @@
 
 namespace App\Controller\Api\v1;
 
-use App\DTO\GroupItemDTO;
 use App\Entity\GroupItem;
 use App\Service\GroupItemService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 /** @Route("/api/v1/group_item") */
 class GroupItemController
 {
     private GroupItemService $groupItemService;
+    private Environment $twig;
 
-    public function __construct(GroupItemService $groupItemService)
+    public function __construct(GroupItemService $groupItemService, Environment $twig)
     {
         $this->groupItemService = $groupItemService;
+        $this->twig = $twig;
     }
 
     /**
@@ -34,6 +36,19 @@ class GroupItemController
             [['success' => true], 200];
 
         return new JsonResponse($data, $code);
+    }
+
+    /**
+     * @Route("/form", methods={"GET"})
+     */
+    public function getSaveFormAction(): Response
+    {
+        $form = $this->groupItemService->gerSaveForm();
+        $content = $this->twig->render('group_item.twig', [
+            'form' => $form->createView()
+        ]);
+
+        return new Response($content);
     }
 
     /**
