@@ -116,7 +116,7 @@ class GroupItem
         return $this;
     }
 
-        /**
+    /**
      * @throws JsonException
      */
     public function toArray(): array
