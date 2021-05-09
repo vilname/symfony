@@ -43,7 +43,7 @@ class GroupItemController
      */
     public function getSaveFormAction(): Response
     {
-        $form = $this->groupItemService->gerSaveForm();
+        $form = $this->groupItemService->getSaveForm();
         $content = $this->twig->render('group_item.twig', [
             'form' => $form->createView()
         ]);

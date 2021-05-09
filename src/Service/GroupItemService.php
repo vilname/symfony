@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\DTO\GroupItemDTO;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -60,14 +61,22 @@ class GroupItemService
         return $groupItemManager->getId();
     }
 
-    public function gerSaveForm(): FormInterface
+    public function getSaveForm(): FormInterface
     {
+        $groupItemRepository = $this->entityManager->getRepository(GroupItem::class);
+        $groupItem = $groupItemRepository->findAll();
+        if ($groupItem === null) {
+            return null;
+        }
+
+        
+        // return $this->formFactory->createBuilder(FormType::class, GroupItemDTO::formEntity($groupItem))
         return $this->formFactory->createBuilder(FormType::class)
             ->add('id', IntegerType::class)
             ->add('appertice', CollectionType::class, [
                 // 'required' => false,
                 'entry_type' => GroupItemType::class,
-                // 'entry_options' => ['label' => false],
+                'entry_options' => ['label' => false],
                 'allow_add' => true,
                 ])
             // ->add('groupId', CollectionType::class)
