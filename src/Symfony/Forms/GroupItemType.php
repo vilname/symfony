@@ -26,5 +26,18 @@ class GroupItemType extends AbstractType
             'data_class' => GroupItem::class,
         ));
     }
+
+    public static function getChoicesData(array $groupItem) 
+    {
+        $result = [];
+        foreach ($groupItem as $item) {
+            $result['group'][$item->getGroupId()->getName()] = $item->getGroupId()->getId();
+            $result['appertice'][$item->getAppertice()->getName()] = $item->getAppertice()->getId();
+            $result['skill'][$item->getSkill()->getSkill()] = $item->getSkill()->getId();
+            $result['teacher'][$item->getTeacher()->getName()] = $item->getTeacher()->getId();
+        }
+
+        return $result;
+    }
 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\v1;
 
+use App\DTO\GroupItemDTO;
 use App\Entity\GroupItem;
 use App\Service\GroupItemService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,26 +23,51 @@ class GroupItemController
         $this->twig = $twig;
     }
 
+    // /**
+    //  * @Route("", methods={"POST"})
+    //  *
+    //  * @throws JsonException
+    //  */
+    // public function saveGroupItemAction(Request $request, GroupItemDTO $groupItemDTO): Response
+    // {
+    //     // $this->appertice = $this->entityManager->getRepository(Appertice::class)->find($request->request->get('appertice'));
+    //     // $this->groupId = $this->entityManager->getRepository(Group::class)->find($request->request->get('group_id'));
+    //     // $this->skill = $this->entityManager->getRepository(Skill::class)->find($request->request->get('skill'));
+    //     // $this->teacher = $this->entityManager->getRepository(Teacher::class)->find($request->request->get('teacher'));
+
+    //     $groupItemId = $this->groupItemService->getEntityField($request);
+
+    //     [$data, $code] = $groupItemId === null ?
+    //         [['success' => false], 400] :
+    //         [['success' => true], 200];
+
+    //     return new JsonResponse($data, $code);
+    // }
+
     /**
-     * @Route("", methods={"POST"})
-     *
-     * @throws JsonException
-     */
-    public function saveGroupItemAction(Request $request): Response
+    * @Route("/form", methods={"POST"})
+    */
+    public function saveFormAction(Request $request): Response
     {
-        $apperticeId = $this->groupItemService->getEntityField($request);
+        $form = $this->groupItemService->getSaveForm();
+        $form->handleRequest($request);
 
-        [$data, $code] = $apperticeId === null ?
-            [['success' => false], 400] :
-            [['success' => true], 200];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $groupItem = $this->groupItemService->getEntityField($form);
+            $groupItemId = $this->groupItemService->saveGroupItem($groupItem);
 
-        return new JsonResponse($data, $code);
+            [$data, $code] = ($groupItemId === null) ? [['success' => false], 400] : [['id' => $groupItemId], 200];
+
+            return new JsonResponse($data, $code);
+        } else {
+            return new JsonResponse($form->getErrors()[0]->getMessage());
+        }
     }
 
     /**
      * @Route("/form", methods={"GET"})
      */
-    public function getSaveFormAction(): Response
+    public function getFormAction(): Response
     {
         $form = $this->groupItemService->getSaveForm();
         $content = $this->twig->render('group_item.twig', [
@@ -90,9 +116,48 @@ class GroupItemController
      */
     public function updateUserAction(Request $request): Response
     {
-
         $result = $this->groupItemService->updateGroupItem($request);
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
+    }
+
+    /**
+     * @Route("/form/{id}", methods={"GET"}, requirements={"id":"\d+"})
+     */
+    public function updateFormAction(int $id): Response
+    {
+        $form = $this->groupItemService->getUpdateForm($id);
+        if ($form === null) {
+            return new JsonResponse(['message' => "User with ID $id not found"], 404);
+        }
+        $content = $this->twig->render('group_item.twig', [
+            'form' => $form->createView(),
+        ]);
+
+        return new Response($content);
+    }
+
+    /**
+    * @Route("/form/{id}", methods={"PATCH"}, requirements={"id":"\d+"})
+    */
+    public function updateFormeAction(Request $request, int $id)
+    {
+        $form = $this->groupItemService->getUpdateForm($id);
+        if ($form === null) {
+            return new JsonResponse(['message' => "User with ID $id not found"], 404);
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $groupItem = $this->groupItemService->getEntityField($form);
+            $groupItemId = $this->groupItemService->updateGroupItem($id, $groupItem);
+
+            [$data, $code] = ($groupItemId === null) ? [['success' => false], 400] : [['id' => $groupItemId], 200];
+
+            return new JsonResponse($data, $code);
+        } else {
+            return new JsonResponse($form->getErrors()[0]->getMessage());
+        }
     }
 }

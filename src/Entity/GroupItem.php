@@ -70,17 +70,17 @@ class GroupItem
     }
 
     /**
-     * @return Collection
+     * @return Appertice
      */
-    public function getAppertice(): Collection
+    public function getAppertice(): Appertice
     {
         return $this->appertice;
     }
 
     /**
-     * @param Collection $appertice
+     * @param Appertice $appertice
      */
-    public function setAppertice(Collection $appertice): void
+    public function setAppertice(Appertice $appertice): void
     {
         $this->appertice = $appertice;
     }

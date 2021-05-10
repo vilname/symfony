@@ -10,24 +10,23 @@ use App\Entity\Teacher;
 
 class GroupItemDTO
 {
+    public Group $group;
     public Appertice $appertice;
-    public Group $groupId;
     public Skill $skill;
     public Teacher $teacher;
 
-    public static function formEntity(GroupItem $groupItem): self
+    public static function getEntity(GroupItem $groupItem): self
     {
         return new self([
-            'appertice' => array_map(
-                static function (Appertice $appertice) {
-                    return ['id' => $appertice->getId(), 'name' => $appertice->getName()];
-                },
-                $groupItem->getAppertice()->getValues()
-            ),
+            'appertice' => [
+                'choices' => [$groupItem->getAppertice()->getName() => $groupItem->getAppertice()->getId()]
+            ],
             // 'groupId' => $groupId,
             // 'skill' => $skill,
             // 'teacher' => $teacher,
         ]);
     }
+
+
 }
 

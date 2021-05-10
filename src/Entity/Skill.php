@@ -25,7 +25,7 @@ class Skill
      *
      * @ORM\Column(type="string", length=32, nullable=false)
      */
-    private string $skills;
+    private string $skill;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Appertice", mappedBy="apperticeSkill")
