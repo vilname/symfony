@@ -3,9 +3,8 @@
 
 namespace App\Service;
 
-use App\DTO\GroupItemDTO;
+
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use App\Entity\Appertice;
@@ -15,9 +14,7 @@ use App\Entity\Skill;
 use App\Entity\Teacher;
 use App\Symfony\Forms\GroupItemType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
 
@@ -139,7 +136,6 @@ class GroupItemService
 
         $chouces = GroupItemType::getChoicesData($groupItem);
 
-        // return $this->formFactory->createBuilder(FormType::class, GroupItemDTO::getEntity($groupItem))
         return $this->formFactory->createBuilder(FormType::class)
             ->add('groupId', ChoiceType::class, [
                 'placeholder'  =>  'Выберите вариант',
@@ -153,21 +149,24 @@ class GroupItemService
                 'choices' => $chouces['appertice'],
                 'choice_attr' => [
                     $groupItemElement->getAppertice()->getName() => ['selected' => true]
-                ]
+                ],
+                'require' => false
             ])
             ->add('skill', ChoiceType::class, [
                 'placeholder'  =>  'Выберите вариант',
                 'choices' => $chouces['skill'],
                 'choice_attr' => [
                     $groupItemElement->getSkill()->getSkill() => ['selected' => true]
-                ]
+                ],
+                'require' => false
             ])
             ->add('teacher', ChoiceType::class, [
                 'placeholder'  =>  'Выберите вариант',
                 'choices' => $chouces['teacher'],
                 'choice_attr' => [
                     $groupItemElement->getTeacher()->getName() => ['selected' => true]
-                ]
+                ],
+                'require' => false
             ])
             ->add('submit', SubmitType::class)
             ->setMethod('PATCH')

@@ -12,21 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupItemType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        // $builder->add('name', TextType::class)
-        //     ->add('id', HiddenType::class);
-
-        $builder->add('name');
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => GroupItem::class,
-        ));
-    }
-
     public static function getChoicesData(array $groupItem) 
     {
         $result = [];

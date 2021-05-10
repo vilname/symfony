@@ -146,7 +146,6 @@ class GroupItemController
         if ($form === null) {
             return new JsonResponse(['message' => "User with ID $id not found"], 404);
         }
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
