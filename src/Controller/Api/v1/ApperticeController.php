@@ -113,7 +113,7 @@ class ApperticeController
     {
         $form = $this->apperticeService->getUpdateForm($id);
         if ($form === null) {
-            return new JsonResponse(['message' => "User with ID $id not found"], 404);
+            return new JsonResponse(['message' => "Appertice with ID $id not found"], 404);
         }
         $content = $this->twig->render('appertice.twig', [
             'form' => $form->createView(),
@@ -129,12 +129,13 @@ class ApperticeController
     {
         $form = $this->apperticeService->getUpdateForm($id);
         if ($form === null) {
-            return new JsonResponse(['message' => "User with ID $id not found"], 404);
+            return new JsonResponse(['message' => "Appertice with ID $id not found"], 404);
         }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $appertice = $this->apperticeService->getEntity($id);
+            $appertice->removeApperticeSkill($appertice->getApperticeSkill()->getValues()[0]);
 
             $groupItemId = $this->apperticeService->saveAppertice($appertice, $form->getData());
 

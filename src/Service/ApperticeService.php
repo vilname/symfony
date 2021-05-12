@@ -111,8 +111,7 @@ class ApperticeService
 
     public function getUpdateForm(int $id): FormInterface
     {
-        $apperticeRepository = $this->entityManager->getRepository(Appertice::class);
-        $appertice = $apperticeRepository->find($id);
+        $appertice = $this->getEntity($id);
 
         $skillRepository = $this->entityManager->getRepository(Skill::class);
         $skillElement = $skillRepository->find($appertice->getApperticeSkill()->getValues()[0]->getId());
