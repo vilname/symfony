@@ -113,7 +113,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="869d737b-704b-4ccb-be75-4d6af3deb48a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/home.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/home.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/sensio_framework_extra.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/GroupItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/GroupController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/GroupItemDTO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/GroupDTO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Appertice.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Appertice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Group.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/GroupItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Skill.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Teacher.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/GroupItemRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/GroupRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/GroupRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ApperticeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ApperticeService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/GroupItemService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/GroupService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/GroupService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Symfony/Forms/GroupItemType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Symfony/Forms/GroupType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/group_item.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/group.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,6 +228,10 @@
       <path value="$PROJECT_DIR$/vendor/stof/doctrine-extensions-bundle" />
       <path value="$PROJECT_DIR$/vendor/gedmo/doctrine-extensions" />
       <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/intl" />
+      <path value="$PROJECT_DIR$/vendor/symfony/form" />
     </include_path>
   </component>
   <component name="ProjectId" id="1p3RPHumc3R5FIGB3ETtVZXNYfv" />
@@ -221,7 +249,11 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../site" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -271,6 +303,7 @@
       <workItem from="1618035915892" duration="386000" />
       <workItem from="1618663060687" duration="846000" />
       <workItem from="1618937485725" duration="414000" />
+      <workItem from="1621673864917" duration="15130000" />
     </task>
     <servers />
   </component>
@@ -288,79 +321,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="586" y="63" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1616912666612">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="586" y="63" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616912666612" />
-    <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser" timestamp="1616934257379">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616934257379" />
-    <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1614445555649" />
-    <state x="262" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1616864273012">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="262" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616864273012" />
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1615485680178">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1615485680178" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1616933672536">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616933672536" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1614445139683" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1616930921856">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616930921856" />
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1614412314913" />
-    <state width="1024" height="210" key="GridCell.Tab.0.bottom" timestamp="1616929958012">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1024" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616929958012" />
-    <state width="1024" height="210" key="GridCell.Tab.0.center" timestamp="1616929958012">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1024" height="210" key="GridCell.Tab.0.center/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616929958012" />
-    <state width="1024" height="210" key="GridCell.Tab.0.left" timestamp="1616929958011">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1024" height="210" key="GridCell.Tab.0.left/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616929958011" />
-    <state width="1024" height="210" key="GridCell.Tab.0.right" timestamp="1616929958012">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1024" height="210" key="GridCell.Tab.0.right/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616929958012" />
-    <state x="528" y="135" key="NewPhpClassDialog" timestamp="1616933632295">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="-1260" y="170" key="NewPhpClassDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1614621730069" />
-    <state x="528" y="135" key="NewPhpClassDialog/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616933632295" />
-    <state x="528" y="135" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1614445414582" />
-    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1615201632504">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1615201632504" />
-    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1614445403834" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1616090277274">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="-1574" y="72" key="SettingsEditor/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1614620439427" />
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616090277274" />
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1614413028876" />
-    <state x="655" y="300" width="312" height="243" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1616939066424">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="655" y="300" width="312" height="243" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616939066424" />
-    <state x="478" y="145" width="587" height="534" key="find.popup" timestamp="1616866603640">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="478" y="145" width="587" height="534" key="find.popup/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616866603640" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1616936174956">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1616936174956" />
   </component>
 </project>

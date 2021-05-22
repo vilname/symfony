@@ -49,14 +49,42 @@ class Group
      */
     private bool $active;
 
+
     /**
-     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="groupId", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="groupSkill")
+     * @ORM\JoinTable(
+     *     name="group_skill",
+     *     joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
+     * )
      */
-    private $groupItem;
+    private $skill;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Teacher::class, inversedBy="groupTeacher")
+     * @ORM\JoinTable(
+     *     name="group_teacher",
+     *     joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="teacher_id", referencedColumnName="id")}
+     * )
+     */
+    private $teacher;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Appertice::class, inversedBy="group")
+     * @ORM\JoinTable(
+     *     name="group_appertice",
+     *     joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="appertice_id", referencedColumnName="id")}
+     * )
+     */
+    private $appertice;
 
     public function __construct()
     {
-        $this->groupItem = new ArrayCollection();
+        $this->appertice = new ArrayCollection();
+        $this->skill = new ArrayCollection();
+        $this->teacher = new ArrayCollection();
     }
 
     /**
@@ -123,32 +151,83 @@ class Group
         $this->active = $active;
     }
 
-    /**
-     * @return Collection|GroupItem[]
-     */
-    public function getGroupItem(): Collection
+    public function getSkill(): ?Skill
     {
-        return $this->groupItem;
+        return $this->skill;
     }
 
-    public function addGroupItem(GroupItem $groupItem): self
+    public function setSkill(?Skill $skill): self
     {
-        if (!$this->groupItem->contains($groupItem)) {
-            $this->groupItem[] = $groupItem;
-            $groupItem->setGroupId($this);
+        $this->skill = $skill;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Appertice[]
+     */
+    public function getAppertice(): Collection
+    {
+        return $this->appertice;
+    }
+
+
+    public function addAppertice(Appertice $appertice): self
+    {
+        if (!$this->appertice->contains($appertice)) {
+            $this->appertice[] = $appertice;
         }
 
         return $this;
     }
 
-    public function removeGroupItem(GroupItem $groupItem): self
+    public function removeAppertice(Appertice $appertice): self
     {
-        if ($this->groupItem->removeElement($groupItem)) {
-            // set the owning side to null (unless already changed)
-            if ($groupItem->getGroupId() === $this) {
-                $groupItem->setGroupId(null);
-            }
+        $this->appertice->removeElement($appertice);
+
+        return $this;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skill->contains($skill)) {
+            $this->skill[] = $skill;
         }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        $this->skill->removeElement($skill);
+
+        return $this;
+    }
+
+    public function addTeacher(Teacher $teacher): self
+    {
+        if (!$this->teacher->contains($teacher)) {
+            $this->teacher[] = $teacher;
+        }
+
+        return $this;
+    }
+
+    public function removeTeacher(Teacher $teacher): self
+    {
+        $this->teacher->removeElement($teacher);
 
         return $this;
     }

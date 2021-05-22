@@ -39,14 +39,14 @@ class Skill
     private Collection $skillTeacher;
 
     /**
-     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="skill")
+     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="skill")
      */
-    private $groupItem;
+    private $group;
 
     public function __construct()
     {
         $this->skillAppertice = new ArrayCollection();
-        $this->groupItem = new ArrayCollection();
+        $this->group = new ArrayCollection();
     }
 
     /**
@@ -90,29 +90,29 @@ class Skill
     }
 
     /**
-     * @return Collection|GroupItem[]
+     * @return Collection|Group[]
      */
-    public function getGroupItem(): Collection
+    public function getGroup(): Collection
     {
-        return $this->groupItem;
+        return $this->group;
     }
 
-    public function addGroupItem(GroupItem $groupItem): self
+    public function addGroup(Group $group): self
     {
-        if (!$this->groupItem->contains($groupItem)) {
-            $this->groupItem[] = $groupItem;
-            $groupItem->setSkill($this);
+        if (!$this->group->contains($group)) {
+            $this->group[] = $group;
+            $group->setSkill($this);
         }
 
         return $this;
     }
 
-    public function removeGroupItem(GroupItem $groupItem): self
+    public function removeGroup(Group $group): self
     {
-        if ($this->groupItem->removeElement($groupItem)) {
+        if ($this->group->removeElement($group)) {
             // set the owning side to null (unless already changed)
-            if ($groupItem->getSkill() === $this) {
-                $groupItem->setSkill(null);
+            if ($group->getSkill() === $this) {
+                $group->setSkill(null);
             }
         }
 

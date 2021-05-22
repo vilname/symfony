@@ -11,7 +11,6 @@ use App\Repository\ApperticeRepository;
 use App\Symfony\Forms\ApperticeType;
 use DateTime;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -98,6 +97,8 @@ class ApperticeService
     {
         $skillRepository = $this->entityManager->getRepository(Skill::class);
         $skill = $skillRepository->findAll();
+
+
 
         return $this->formFactory->createBuilder(FormType::class)
             ->add('name', TextType::class)

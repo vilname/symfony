@@ -18,6 +18,6 @@ yarn-error.log
 
 .env.test
 phpunit.xml.dist
-.idea/
+/.idea/*
 config/
 *.txt

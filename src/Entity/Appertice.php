@@ -7,6 +7,7 @@ use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\Group;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -37,7 +38,7 @@ class Appertice
     private string $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
      *
      * @ORM\JoinTable(
      *     name="appertice_skill",
@@ -48,14 +49,13 @@ class Appertice
     private $apperticeSkill;
 
     /**
-     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="appertice")
+     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="appertice")
      */
-    private $groupItem;
+    private Collection $group;
 
     public function __construct()
     {
         $this->apperticeSkill = new ArrayCollection();
-        $this->groupItem = new ArrayCollection();
     }
 
     /**
@@ -125,33 +125,4 @@ class Appertice
         ];
     }
 
-    /**
-     * @return Collection|GroupItem[]
-     */
-    public function getGroupItem(): Collection
-    {
-        return $this->groupItem;
-    }
-
-    public function addGroupItem(GroupItem $groupItem): self
-    {
-        if (!$this->groupItem->contains($groupItem)) {
-            $this->groupItem[] = $groupItem;
-            $groupItem->setAppertice($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGroupItem(GroupItem $groupItem): self
-    {
-        if ($this->groupItem->removeElement($groupItem)) {
-            // set the owning side to null (unless already changed)
-            if ($groupItem->getAppertice() === $this) {
-                $groupItem->setAppertice(null);
-            }
-        }
-
-        return $this;
-    }
 }

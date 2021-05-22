@@ -56,13 +56,13 @@ class Teacher
     private Collection $teacher;
 
     /**
-     * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="teacher")
+     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="teacher")
      */
-    private $groupItem;
+    private $group;
 
     public function __construct()
     {
-        $this->groupItem = new ArrayCollection();
+        $this->group = new ArrayCollection();
     }
 
     /**
@@ -139,29 +139,29 @@ class Teacher
     }
 
     /**
-     * @return Collection|GroupItem[]
+     * @return Collection|Group[]
      */
-    public function getGroupItem(): Collection
+    public function getGroup(): Collection
     {
-        return $this->groupItem;
+        return $this->group;
     }
 
-    public function addGroupItem(GroupItem $groupItem): self
+    public function addGroup(Group $group): self
     {
-        if (!$this->groupItem->contains($groupItem)) {
-            $this->groupItem[] = $groupItem;
-            $groupItem->setTeacher($this);
+        if (!$this->group->contains($group)) {
+            $this->group[] = $group;
+            $group->setTeacher($this);
         }
 
         return $this;
     }
 
-    public function removeGroupItem(GroupItem $groupItem): self
+    public function removeGroup(Group $group): self
     {
-        if ($this->groupItem->removeElement($groupItem)) {
+        if ($this->group->removeElement($group)) {
             // set the owning side to null (unless already changed)
-            if ($groupItem->getTeacher() === $this) {
-                $groupItem->setTeacher(null);
+            if ($group->getTeacher() === $this) {
+                $group->setTeacher(null);
             }
         }
 
