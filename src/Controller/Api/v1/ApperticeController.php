@@ -2,21 +2,25 @@
 
 namespace App\Controller\Api\v1;
 
+use App\DTO\ApperticeDTO;
 use App\Entity\Appertice;
 use App\Service\ApperticeService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 /** @Route("/api/v1/appertice") */
 class ApperticeController
 {
     private ApperticeService $apperticeService;
+    private Environment $twig;
 
-    public function __construct(ApperticeService $apperticeService)
+    public function __construct(ApperticeService $apperticeService, Environment $twig)
     {
         $this->apperticeService = $apperticeService;
+        $this->twig = $twig;
     }
 
     /**
@@ -67,5 +71,79 @@ class ApperticeController
         $result = $this->apperticeService->updateAppertice($apperticeId, $apperticeManager);
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
+    }
+
+    /**
+    * @Route("/form", methods={"GET"})
+    */
+    public function getFormAction(): Response
+    {
+        $form = $this->apperticeService->getSaveForm();
+        $content = $this->twig->render('appertice.twig', [
+            'form' => $form->createView()
+        ]);
+
+        return new Response($content);
+    }
+
+    /**
+    * @Route("/form", methods={"POST"})
+    */
+    public function saveFormAction(Request $request): Response
+    {
+        $form = $this->apperticeService->getSaveForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $appertice = new Appertice();
+            $groupItemId = $this->apperticeService->saveAppertice($appertice, new ApperticeDTO($form->getData()));
+
+            [$data, $code] = ($groupItemId === null) ? [['success' => false], 400] : [['id' => $groupItemId], 200];
+
+            return new JsonResponse($data, $code);
+        } else {
+            return new JsonResponse($form->getErrors()[0]->getMessage());
+        }
+    }
+
+    /**
+    * @Route("/form/{id}", methods={"GET"}, requirements={"id":"\d+"})
+    */
+    public function updateFormAction(int $id): Response
+    {
+        $form = $this->apperticeService->getUpdateForm($id);
+        if ($form === null) {
+            return new JsonResponse(['message' => "Appertice with ID $id not found"], 404);
+        }
+        $content = $this->twig->render('appertice.twig', [
+            'form' => $form->createView(),
+        ]);
+
+        return new Response($content);
+    }
+
+    /**
+    * @Route("/form/{id}", methods={"PATCH"}, requirements={"id":"\d+"})
+    */
+    public function updateFormeAction(Request $request, int $id)
+    {
+        $form = $this->apperticeService->getUpdateForm($id);
+        if ($form === null) {
+            return new JsonResponse(['message' => "Appertice with ID $id not found"], 404);
+        }
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $appertice = $this->apperticeService->getEntity($id);
+            $appertice->removeApperticeSkill($appertice->getApperticeSkill()->getValues()[0]);
+
+            $groupItemId = $this->apperticeService->saveAppertice($appertice, $form->getData());
+
+            [$data, $code] = ($groupItemId === null) ? [['success' => false], 400] : [['id' => $groupItemId], 200];
+
+            return new JsonResponse($data, $code);
+        } else {
+            return new JsonResponse($form->getErrors()[0]->getMessage());
+        }
     }
 }

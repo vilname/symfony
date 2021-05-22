@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -30,7 +31,7 @@ class GroupItem
 
     /**
      * @ORM\ManyToOne(targetEntity=Appertice::class, inversedBy="groupItem")
-     * @ORM\JoinColumn(name="appertice")
+     * @ORM\JoinColumn(name="appertice", nullable=true)
      */
     private $appertice;
 
@@ -42,13 +43,13 @@ class GroupItem
 
     /**
      * @ORM\ManyToOne(targetEntity=Skill::class, inversedBy="groupItem")
-     * @ORM\JoinColumn(name="skill")
+     * @ORM\JoinColumn(name="skill", nullable=true)
      */
     private $skill;
 
     /**
      * @ORM\ManyToOne(targetEntity=Teacher::class, inversedBy="groupItem")
-     * @ORM\JoinColumn(name="teacher")
+     * @ORM\JoinColumn(name="teacher", nullable=true)
      */
     private $teacher;
 
@@ -68,16 +69,28 @@ class GroupItem
         $this->id = $id;
     }
 
-    public function getAppertice(): ?Appertice
+    /**
+     * @return Appertice
+     */
+    public function getAppertice(): Appertice
     {
         return $this->appertice;
     }
 
-    public function setAppertice(?Appertice $appertice): self
+    /**
+     * @param Appertice $appertice
+     */
+    public function setAppertice(Appertice $appertice): void
     {
         $this->appertice = $appertice;
+    }
 
-        return $this;
+    public function addAppertice(Appertice $appertice) {
+        $this->appertice->add($appertice);
+    }
+
+    public function removeAppertice(Appertice $appertice) {
+        $this->appertice->removeElement($appertice);
     }
 
     public function getGroupId(): ?Group

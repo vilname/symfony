@@ -37,7 +37,7 @@ class Appertice
     private string $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill", cascade={"all"})
      *
      * @ORM\JoinTable(
      *     name="appertice_skill",
@@ -45,7 +45,7 @@ class Appertice
      *     inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
      * )
      */
-    private Collection $apperticeSkill;
+    private $apperticeSkill;
 
     /**
      * @ORM\OneToMany(targetEntity=GroupItem::class, mappedBy="appertice")
@@ -55,7 +55,6 @@ class Appertice
     public function __construct()
     {
         $this->apperticeSkill = new ArrayCollection();
-        // $this->apperticeGroupItem = new ArrayCollection();
         $this->groupItem = new ArrayCollection();
     }
 
@@ -92,19 +91,27 @@ class Appertice
     }
 
     /**
-     * @return Skill
+     * @return Collection
      */
-    public function getApperticeSkill(): Skill
+    public function getApperticeSkill(): Collection
     {
         return $this->apperticeSkill;
     }
 
     /**
-     * @param Skill $apperticeSkill
+     * @param Collection $apperticeSkill
      */
-    public function setApperticeSkill(Skill $apperticeSkill): void
+    public function setApperticeSkill(Collection $apperticeSkill): void
     {
         $this->apperticeSkill = $apperticeSkill;
+    }
+
+    public function addApperticeSkill(Skill $apperticeSkill) {
+        $this->apperticeSkill->add($apperticeSkill);
+    }
+
+    public function removeApperticeSkill(Skill $apperticeSkill) {
+        $this->apperticeSkill->removeElement($apperticeSkill);
     }
 
     /**
