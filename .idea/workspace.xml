@@ -113,15 +113,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="869d737b-704b-4ccb-be75-4d6af3deb48a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/Api/v1/UserController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DTO/UserDTO.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/UserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aff0f331-903b-420e-a1f7-58943ce14d45/storage_v2/_src_/database/twitter.c6phyQ/schema/public.abK9xQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/new.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Security/ApiTokenAuthenticator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Security/AuthUser.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/AuthService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Symfony/Forms/TeacherType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Symfony/Helper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/teacher.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/home.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/home.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ApperticeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ApperticeService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/TeacherService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TeacherService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/UserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UserService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Symfony/Forms/ApperticeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Symfony/Forms/ApperticeType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/appertice.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/appertice.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/group.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/group.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,6 +235,10 @@
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/vendor/symfony/intl" />
       <path value="$PROJECT_DIR$/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/vendor/namshi/jose" />
+      <path value="$PROJECT_DIR$/vendor/lexik/jwt-authentication-bundle" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
     </include_path>
   </component>
   <component name="ProjectId" id="1p3RPHumc3R5FIGB3ETtVZXNYfv" />
@@ -240,7 +263,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -292,7 +315,12 @@
       <workItem from="1621709630036" duration="594000" />
       <workItem from="1621710792351" duration="3681000" />
       <workItem from="1621751324420" duration="1476000" />
-      <workItem from="1621761975569" duration="10339000" />
+      <workItem from="1621761975569" duration="10483000" />
+      <workItem from="1621794920421" duration="6568000" />
+      <workItem from="1621883120527" duration="6264000" />
+      <workItem from="1622057264784" duration="3224000" />
+      <workItem from="1622145280842" duration="2322000" />
+      <workItem from="1622275319081" duration="2986000" />
     </task>
     <servers />
   </component>

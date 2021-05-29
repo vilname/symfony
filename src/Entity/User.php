@@ -43,9 +43,30 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
      */
     private string $roles;
 
+    /**
+     * @ORM\Column(type="string", length=32, nullable=true, unique=true)
+     */
+    private string $token;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
     }
 
     public function getLogin(): ?string
@@ -81,7 +102,7 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     {
         $roles = json_decode($this->roles, true, 512, JSON_THROW_ON_ERROR);
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_APPERTICE';
 
         return array_unique($roles);
     }

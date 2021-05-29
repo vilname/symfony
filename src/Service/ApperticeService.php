@@ -4,6 +4,7 @@
 namespace App\Service;
 
 use App\DTO\ApperticeDTO;
+use App\Symfony\Helper;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Appertice;
 use App\Entity\Skill;
@@ -104,7 +105,7 @@ class ApperticeService
             ->add('name', TextType::class)
             ->add('apperticeSkill', ChoiceType::class, [
                 'placeholder'  =>  'Выберите вариант',
-                'choices' => ApperticeType::getChoicesData($skill)
+                'choices' => Helper::getChoicesData($skill)
             ])
             ->add('submit', SubmitType::class)
             ->getForm();

@@ -37,6 +37,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
-    # Doctrine\ORM\EntityManagerInterface:
-    #     tags:
-    #         - { name: entity_manager, connection: default }
+    App\Service\AuthService:
+        arguments:
+            $tokenTTL: '%env(JWT_TTL_SEC)%'
