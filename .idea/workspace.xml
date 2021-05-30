@@ -113,34 +113,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="869d737b-704b-4ccb-be75-4d6af3deb48a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/new.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Security/ApiTokenAuthenticator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Security/AuthUser.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/AuthService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Symfony/Forms/TeacherType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Symfony/Helper.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/teacher.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/home.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/home.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DTO/TeacherDTO.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/auth.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/new.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/new.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Teacher.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/AuthUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AuthUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/ApperticeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ApperticeService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/AuthService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/AuthService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/SkillService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SkillService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/TeacherService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TeacherService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Symfony/Forms/ApperticeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Symfony/Forms/ApperticeType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/appertice.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/appertice.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/group.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/group.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/teacher.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/teacher.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,14 +242,14 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../site" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -320,7 +306,9 @@
       <workItem from="1621883120527" duration="6264000" />
       <workItem from="1622057264784" duration="3224000" />
       <workItem from="1622145280842" duration="2322000" />
-      <workItem from="1622275319081" duration="2986000" />
+      <workItem from="1622275319081" duration="7863000" />
+      <workItem from="1622304697402" duration="5424000" />
+      <workItem from="1622360715959" duration="20748000" />
     </task>
     <servers />
   </component>

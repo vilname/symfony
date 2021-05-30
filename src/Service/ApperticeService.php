@@ -99,8 +99,6 @@ class ApperticeService
         $skillRepository = $this->entityManager->getRepository(Skill::class);
         $skill = $skillRepository->findAll();
 
-
-
         return $this->formFactory->createBuilder(FormType::class)
             ->add('name', TextType::class)
             ->add('apperticeSkill', ChoiceType::class, [

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\v1;
 
+use App\DTO\TeacherDTO;
 use App\Entity\Teacher;
 use App\Service\TeacherService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -75,5 +76,24 @@ class TeacherController
 
         return new Response($content);
     }
+    /**
+     * @Route("/form", methods={"POST"})
+     */
+    public function saveFormAction(Request $request): Response
+    {
+        $form = $this->teacherService->getSaveForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $teacher = new Teacher();
+            $groupItemId = $this->teacherService->saveTeacher($teacher, new TeacherDTO($form->getData()));
+            [$data, $code] = ($groupItemId === null) ? [['success' => false], 400] : [['id' => $groupItemId], 200];
+
+            return new JsonResponse($data, $code);
+        } else {
+            return new JsonResponse($form->getErrors()[0]->getMessage());
+        }
+    }
+
 
 }

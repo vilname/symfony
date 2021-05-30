@@ -18,7 +18,7 @@ function addOrganizationFormDeleteLink($organizationFormLi) {
 }
 
 var $collectionHolder;
-var $addOrganizationButton = $('<button type="button" class="btn-info btn add_organization_link">Add a linked organization</button>');
+var $addOrganizationButton = $('<button type="button" class="btn-info btn add_organization_link">Добавить новый навык</button>');
 var $newLinkLi = $('<li></li>').append($addOrganizationButton);
 
 jQuery(document).ready(function() {
@@ -31,5 +31,6 @@ jQuery(document).ready(function() {
     $addOrganizationButton.on('click', function(e) {
         addOrganizationForm($collectionHolder, $newLinkLi);
     });
+
 });
 

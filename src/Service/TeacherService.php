@@ -4,12 +4,15 @@
 namespace App\Service;
 
 
+use App\DTO\TeacherDTO;
 use App\Entity\Skill;
 use App\Entity\Teacher;
 use App\Repository\TeacherRepository;
 use App\Symfony\Forms\TeacherType;
 use App\Symfony\Forms\UserOrganizationType;
+use App\Symfony\Helper;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -22,12 +25,17 @@ use Symfony\Component\HttpFoundation\Request;
 class TeacherService
 {
     private EntityManagerInterface $entityManager;
-    private FormInterface $formFactory;
+    private FormFactoryInterface $formFactory;
+    /**
+     * @var SkillService
+     */
+    private SkillService $skillService;
 
-    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory)
+    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, SkillService $skillService)
     {
         $this->entityManager = $entityManager;
-        $this->formFactor = $formFactory;
+        $this->formFactory = $formFactory;
+        $this->skillService = $skillService;
     }
 
     public function findTeachers()
@@ -36,14 +44,6 @@ class TeacherService
         $teacherRepository = $this->entityManager->getRepository(Teacher::class);
 
         return $teacherRepository->findTeachers();
-    }
-
-    public function saveTeacher(Teacher $teacher)
-    {
-        $this->entityManager->persist($teacher);
-        $this->entityManager->flush();
-
-        return $teacher->getId();
     }
 
     /**
@@ -78,23 +78,21 @@ class TeacherService
         return true;
     }
 
-    public function updateTeacher(int $teacherId): bool
-    {
-        $teacherRepository = $this->entityManager->getRepository(Teacher::class);
-        $teacher = $teacherRepository->find($teacherId);
-        if ($teacher === null) {
-            return false;
-        }
-
-        return $this->saveTeacher($teacher);
-    }
+//    public function updateTeacher(int $teacherId): bool
+//    {
+//        $teacherRepository = $this->entityManager->getRepository(Teacher::class);
+//        $teacher = $teacherRepository->find($teacherId);
+//        if ($teacher === null) {
+//            return false;
+//        }
+//
+//        return $this->saveTeacher($teacher);
+//    }
 
     public function getSaveForm(): FormInterface
     {
         $skillRepository = $this->entityManager->getRepository(Skill::class);
         $skill = $skillRepository->findAll();
-
-
 
         return $this->formFactory->createBuilder(FormType::class)
             ->add('name', TextType::class)
@@ -104,7 +102,49 @@ class TeacherService
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
             ])
+            ->add('skillSelect', ChoiceType::class, [
+                'placeholder'  =>  'Выберите вариант',
+                'choices' => Helper::getChoicesData($skill)
+            ])
             ->add('submit', SubmitType::class)
             ->getForm();
+    }
+
+    public function saveTeacher(Teacher $teacher, TeacherDTO $teacherDTO): ?int
+    {
+        $teacher->setName($teacherDTO->name);
+        $teacher->setGroupCount($teacherDTO->groupCount);
+        $teacher->setSkillCount(5);
+
+        $skillRepository = $this->entityManager->getRepository(Skill::class);
+        $skillRepository->findOneBy(['id' => $teacherDTO->skillSelect]);
+        $this->entityManager->getEventManager();
+
+        if ($teacherDTO->skillSelect) {
+            $teacher->addTeacherSkill($this->skillService->getEntity($teacherDTO->skillSelect));
+        }
+
+        if (count($teacherDTO->teacherSkill)) {
+            $skill = new Skill();
+            foreach ($teacherDTO->teacherSkill as $item) {
+                $skill->setSkill($item['skill']);
+                $idSkill = $this->skillService->saveSkill($skill);
+
+                $teacher->addTeacherSkill($this->skillService->getEntity($idSkill));
+            }
+        }
+
+        $this->entityManager->persist($teacher);
+        $this->entityManager->flush();
+
+        return $teacher->getId();
+
+//        return 1;
+    }
+
+    public function getEntity(int $id)
+    {
+        $teacherRepository = $this->entityManager->getRepository(Teacher::class);
+        return $teacherRepository->findOneBy(['id' => $id]);
     }
 }

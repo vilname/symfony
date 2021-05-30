@@ -68,4 +68,10 @@ class SkillService
 
         return $this->saveSkill($skill);
     }
+
+    public function getEntity(int $id)
+    {
+        $teacherRepository = $this->entityManager->getRepository(Skill::class);
+        return $teacherRepository->findOneBy(['id' => $id]);
+    }
 }

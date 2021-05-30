@@ -5,6 +5,11 @@ namespace App\Service;
 
 
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AuthService
@@ -15,16 +20,19 @@ class AuthService
     private UserPasswordEncoderInterface $passwordEncoder;
     private JWTEncoderInterface $jwtEncoder;
     private int $tokenTTL;
+    private FormFactoryInterface $formFactory;
 
     public function __construct(UserService $userService,
                                 UserPasswordEncoderInterface $passwordEncoder,
                                 JWTEncoderInterface $jwtEncoder,
-                                int $tokenTTL
+                                int $tokenTTL,
+                                FormFactoryInterface $formFactory
     ) {
         $this->userService = $userService;
         $this->passwordEncoder = $passwordEncoder;
         $this->jwtEncoder = $jwtEncoder;
         $this->tokenTTL = $tokenTTL;
+        $this->formFactory = $formFactory;
     }
 
     public function isCredentialsValid(string $login, string $password): bool
@@ -48,5 +56,14 @@ class AuthService
         ];
 
         return $this->jwtEncoder->encode($tokenData);
+    }
+
+    public function getSaveForm(): FormInterface
+    {
+        return $this->formFactory->createBuilder(FormType::class, [])
+            ->add('login', TextType::class)
+            ->add('password', TextType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm();
     }
 }

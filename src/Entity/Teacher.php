@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TeacherRepository")
  */
-class Teacher
+class Teacher implements HasMetaTimestampsInterface
 {
     use DoctrineEntityCreatedAtTrait;
     use DoctrineEntityUpdatedAtTrait;
@@ -53,7 +53,7 @@ class Teacher
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="skillTeacher")
      */
-    private Collection $teacher;
+    private Collection $teacherSkill;
 
     /**
      * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="teacher")
@@ -63,6 +63,7 @@ class Teacher
     public function __construct()
     {
         $this->group = new ArrayCollection();
+        $this->teacherSkill = new ArrayCollection();
     }
 
     /**
@@ -137,6 +138,24 @@ class Teacher
             'groupCount' => $this->groupCount
         ];
     }
+
+    /**
+     * @return Collection
+     */
+    public function getTeacherSkill(): Collection
+    {
+        return $this->teacherSkill;
+    }
+
+    public function addTeacherSkill(Skill $teacherSkill) {
+        $this->teacherSkill->add($teacherSkill);
+    }
+
+    public function removeTeacherSkill(Skill $teacherSkill) {
+        $this->teacherSkill->removeElement($teacherSkill);
+    }
+
+
 
     /**
      * @return Collection|Group[]
