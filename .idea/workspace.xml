@@ -113,20 +113,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="869d737b-704b-4ccb-be75-4d6af3deb48a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/DTO/TeacherDTO.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/auth.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/new.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/new.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/AuthUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AuthUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ApperticeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ApperticeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/AuthService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/AuthService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/SkillService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SkillService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/TeacherService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TeacherService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/teacher.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/teacher.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/cache.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/cache.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -309,6 +302,8 @@
       <workItem from="1622275319081" duration="7863000" />
       <workItem from="1622304697402" duration="5424000" />
       <workItem from="1622360715959" duration="20748000" />
+      <workItem from="1622458732445" duration="1067000" />
+      <workItem from="1622461308003" duration="1210000" />
     </task>
     <servers />
   </component>
