@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\DTO\AddUserDTO;
 use App\DTO\UserDTO;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -196,39 +197,24 @@ class GroupService
         return $data;
     }
 
-    public function subscribe(int $groupId, int $apperticeName): bool
+    public function findUserById(int $groupId): ?Group
     {
         $groupRepository = $this->entityManager->getRepository(Group::class);
         $group = $groupRepository->find($groupId);
-        if (!($group instanceof Group)) {
-            return false;
-        }
 
-        $apperticeEntity = new Appertice();
-        $apperticeEntity->setName($apperticeName);
-        $this->entityManager->persist($apperticeEntity);
-        $this->entityManager->flush();
-
-        $apperticeEntity->getId();
-
-        return true;
+        return $group;
     }
 
-    public function addApperticeItem(Group $group, string $apperticeName, int $count): int
+    /**
+     * @return string[]
+     */
+    public function getApperticesMessages(Group $group, string $userName, int $count): array
     {
-        $createdAppertice = 0;
+        $result = [];
         for ($i = 0; $i < $count; $i++) {
-            $login = "{$apperticeName}_#$i";
-            $password = $apperticeName;
-            $roles = json_encode('[ROLE_APPERTICE]');
-            $data = compact('login', 'password', 'roles');
-            $userId = $this->userService->saveUser(new User(), new UserDTO($data));
-            if ($userId !== null) {
-                $this->subscribe($group->getId(), $userId);
-                $createdAppertice++;
-            }
+            $result[] = (new AddUserDTO($group->getId(), "$userName #$i", 1))->toAMQPMessage();
         }
 
-        return $createdAppertice;
+        return $result;
     }
 }

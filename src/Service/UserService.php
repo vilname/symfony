@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\DTO\UserDTO;
+use App\Entity\Group;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -89,4 +90,42 @@ class UserService
 
         return $user;
     }
+
+    public function subscribe(int $groupId, int $userName): bool
+    {
+        $groupRepository = $this->entityManager->getRepository(Group::class);
+        $group = $groupRepository->find($groupId);
+        if (!($group instanceof Group)) {
+            return false;
+        }
+
+        $userEntity = new User();
+        $userEntity->setLogin($userName);
+        $this->entityManager->persist($userEntity);
+        $this->entityManager->flush();
+
+        $userEntity->getId();
+
+        return true;
+    }
+
+
+    public function addUserItem(Group $group, string $userName, int $count): int
+    {
+        $createdAppertice = 0;
+        for ($i = 0; $i < $count; $i++) {
+            $login = "{$userName}_#$i";
+            $password = $userName;
+            $roles = json_encode('[ROLE_APPERTICE]');
+            $data = compact('login', 'password', 'roles');
+            $userId = $this->saveUser(new User(), new UserDTO($data));
+            if ($userId !== null) {
+                $this->subscribe($group->getId(), $userId);
+                $createdAppertice++;
+            }
+        }
+
+        return $createdAppertice;
+    }
+
 }

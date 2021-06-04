@@ -46,3 +46,7 @@ services:
         arguments:
             - "[%%level_name%%]: [%%datetime%%] %%message%%\n"
 
+    App\Service\AsyncService:
+        calls:
+            - [ 'registerProducer', [ !php/const App\Service\AsyncService::ADD_USER, '@old_sound_rabbit_mq.add_user_producer' ] ]
+

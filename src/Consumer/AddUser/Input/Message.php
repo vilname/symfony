@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Consumer\AddAppertice\Input;
+namespace App\Consumer\AddUser\Input;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +16,7 @@ final class Message
      * @Assert\Type("string")
      * @Assert\Length(max="32")
      */
-    private string $groupName;
+    private string $userLogin;
 
     /**
      * @Assert\Type("numeric")
@@ -27,7 +27,7 @@ final class Message
         $message = json_decode($messageBody, true, 512, JSON_THROW_ON_ERROR);
         $result = new self();
         $result->groupId = $message['groupId'];
-        $result->groupName = $message['groupName'];
+        $result->userLogin = $message['userLogin'];
         $result->count = $message['count'];
 
         return $result;
@@ -38,9 +38,9 @@ final class Message
         return $this->groupId;
     }
 
-    public function getGroupName(): string
+    public function getUserName(): string
     {
-        return $this->groupName;
+        return $this->userLogin;
     }
 
     public function getCount(): int
