@@ -3,6 +3,8 @@
 
 namespace App\Service;
 
+use App\DTO\UserDTO;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -21,12 +23,17 @@ use DateTime;
 class GroupService
 {
     private EntityManagerInterface $entityManager;
-    private $formFactory;
+    private FormFactoryInterface $formFactory;
+    private UserService $userService;
 
-    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        FormFactoryInterface $formFactory,
+        UserService $userService
+    ) {
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
+        $this->userService = $userService;
     }
 
     public function getGroup(int $page, int $perPage): array
@@ -187,5 +194,41 @@ class GroupService
         }
 
         return $data;
+    }
+
+    public function subscribe(int $groupId, int $apperticeName): bool
+    {
+        $groupRepository = $this->entityManager->getRepository(Group::class);
+        $group = $groupRepository->find($groupId);
+        if (!($group instanceof Group)) {
+            return false;
+        }
+
+        $apperticeEntity = new Appertice();
+        $apperticeEntity->setName($apperticeName);
+        $this->entityManager->persist($apperticeEntity);
+        $this->entityManager->flush();
+
+        $apperticeEntity->getId();
+
+        return true;
+    }
+
+    public function addApperticeItem(Group $group, string $apperticeName, int $count): int
+    {
+        $createdAppertice = 0;
+        for ($i = 0; $i < $count; $i++) {
+            $login = "{$apperticeName}_#$i";
+            $password = $apperticeName;
+            $roles = json_encode('[ROLE_APPERTICE]');
+            $data = compact('login', 'password', 'roles');
+            $userId = $this->userService->saveUser(new User(), new UserDTO($data));
+            if ($userId !== null) {
+                $this->subscribe($group->getId(), $userId);
+                $createdAppertice++;
+            }
+        }
+
+        return $createdAppertice;
     }
 }

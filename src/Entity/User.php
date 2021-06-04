@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,6 +49,27 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
      * @ORM\Column(type="string", length=32, nullable=true, unique=true)
      */
     private string $token;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
+     *
+     * @ORM\JoinTable(
+     *     name="user_skill",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
+     * )
+     */
+    private $userSkill;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="appertice")
+     */
+    private Collection $group;
+
+    public function __construct()
+    {
+        $this->userSkill = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -141,6 +164,31 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
             'roles' => $this->getRoles()
         ];
     }
+
+    /**
+     * @return Collection
+     */
+    public function getApperticeSkill(): Collection
+    {
+        return $this->userSkill;
+    }
+
+    /**
+     * @param Collection $userSkill
+     */
+    public function setUserSkill(Collection $userSkill): void
+    {
+        $this->userSkill = $userSkill;
+    }
+
+    public function addUserSkill(Skill $userSkill) {
+        $this->userSkill->add($userSkill);
+    }
+
+    public function removeUserSkill(Skill $userSkill) {
+        $this->userSkill->removeElement($userSkill);
+    }
+
 
     /**
      * @throws JsonException

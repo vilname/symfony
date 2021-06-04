@@ -140,4 +140,5 @@ class ApperticeService
         $apperticeRepository = $this->entityManager->getRepository(Appertice::class);
         return $apperticeRepository->find($id);
     }
+
 }

@@ -138,8 +138,6 @@ class TeacherService
         $this->entityManager->flush();
 
         return $teacher->getId();
-
-//        return 1;
     }
 
     public function getEntity(int $id)
