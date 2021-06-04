@@ -76,21 +76,6 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getToken(): string
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string $token
-     */
-    public function setToken(string $token): void
-    {
-        $this->token = $token;
-    }
 
     public function getLogin(): ?string
     {
@@ -191,7 +176,7 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
 
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function toArray(): array
     {
