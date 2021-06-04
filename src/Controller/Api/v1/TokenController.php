@@ -31,12 +31,9 @@ class TokenController
      */
     public function getTokenAction(Request $request): Response
     {
-        $form = $this->authService->getSaveForm();
-        $form->handleRequest($request);
-        $formData = $form->getData();
+        $user = $request->getUser();
+        $password = $request->getPassword();
 
-        $user = $request->getUser() ? $request->getUser() : $formData['login'];
-        $password = $request->getPassword() ? $request->getPassword() : $formData['password'];
         if (!$user || !$password) {
             return new JsonResponse(['message' => 'Authorization required'], Response::HTTP_UNAUTHORIZED);
         }
@@ -45,14 +42,6 @@ class TokenController
         }
 
         $token = $this->authService->getToken($user);
-
-        $cookie = new Cookie(
-            'Bearer',
-            'Bearer '.$token,
-            strtotime("+1 day"), '/', null, true, true, false, 'strict');
-        $response = new Response();
-        $response->headers->setCookie($cookie);
-        $response->sendHeaders();
 
         return new JsonResponse(['token' => $token]);
     }

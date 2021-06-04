@@ -43,31 +43,11 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
      */
     private string $roles;
 
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true, unique=true)
-     */
-    private string $token;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getToken(): string
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string $token
-     */
-    public function setToken(string $token): void
-    {
-        $this->token = $token;
-    }
 
     public function getLogin(): ?string
     {
@@ -143,7 +123,7 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function toArray(): array
     {

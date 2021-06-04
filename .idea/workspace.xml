@@ -113,20 +113,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="869d737b-704b-4ccb-be75-4d6af3deb48a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/DTO/TeacherDTO.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/auth.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/new.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/new.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TeacherController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Api/v1/TokenController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Teacher.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/ApiTokenAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/ApiTokenAuthenticator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Security/AuthUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AuthUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/JwtTokenAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ApperticeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ApperticeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/AuthService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/AuthService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/SkillService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/SkillService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/TeacherService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TeacherService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/teacher.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/teacher.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/LoginFormAuthenticator.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,6 +218,36 @@
       <path value="$PROJECT_DIR$/vendor/lexik/jwt-authentication-bundle" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/php-amqplib/php-amqplib" />
+      <path value="$PROJECT_DIR$/vendor/php-amqplib/rabbitmq-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/sentry/sentry-symfony" />
+      <path value="$PROJECT_DIR$/vendor/sentry/sentry" />
+      <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
+      <path value="$PROJECT_DIR$/vendor/clue/stream-filter" />
+      <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/vendor/php-http/promise" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message" />
+      <path value="$PROJECT_DIR$/vendor/php-http/httplug" />
+      <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/vendor/php-http/client-common" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/jean85/pretty-package-versions" />
+      <path value="$PROJECT_DIR$/vendor/http-interop/http-factory-guzzle" />
+      <path value="$PROJECT_DIR$/vendor/domnikl/statsd" />
     </include_path>
   </component>
   <component name="ProjectId" id="1p3RPHumc3R5FIGB3ETtVZXNYfv" />

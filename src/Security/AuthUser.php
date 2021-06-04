@@ -14,7 +14,7 @@ class AuthUser implements UserInterface
     public function __construct(array $credentials)
     {
         $this->userName = $credentials['username'];
-        $this->roles = array_unique(array_merge($credentials['roles'] ?? [], ['ROLE_ADMIN']));
+        $this->roles = array_unique(array_merge($credentials['roles'] ?? [], ['ROLE_APPERTICE']));
     }
 
     public function getRoles()
