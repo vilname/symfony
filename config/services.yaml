@@ -50,3 +50,20 @@ services:
         calls:
             - [ 'registerProducer', [ !php/const App\Service\AsyncService::ADD_USER, '@old_sound_rabbit_mq.add_user_producer' ] ]
 
+    redis_client:
+        class: Redis
+        factory: Symfony\Component\Cache\Adapter\RedisAdapter::createConnection
+        arguments:
+            - '%env(REDIS_DSN)%'
+
+    redis_adapter:
+        class: Symfony\Component\Cache\Adapter\RedisTagAwareAdapter
+        arguments:
+            - '@redis_client'
+            - 'my_app'
+
+    App\Service\UserService:
+        arguments:
+            $cache: '@redis_adapter'
+
+

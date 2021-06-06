@@ -31,7 +31,7 @@ class UserRepository extends ServiceEntityRepository
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->enableResultCache(null, "user_{$page}_{$perPage}")->getResult();
     }
 
     // /**

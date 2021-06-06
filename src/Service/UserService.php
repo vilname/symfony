@@ -10,17 +10,26 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class UserService
 {
+    private const CACHE_TAG = 'user';
+
     private EntityManagerInterface $entityManager;
-
     private UserPasswordEncoderInterface $userPasswordEncoder;
+    private TagAwareCacheInterface $cache;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        TagAwareCacheInterface $cache
+    )
     {
         $this->entityManager = $entityManager;
         $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->cache = $cache;
     }
 
     /**
@@ -30,6 +39,18 @@ class UserService
     {
         /** @var UserRepository $userRepository */
         $userRepository = $this->entityManager->getRepository(User::class);
+
+        $this->cache->get(
+            "user_{$page}_{$perPage}",
+            function (ItemInterface $item) use ($userRepository, $page, $perPage) {
+                $users = $userRepository->getUsers($page, $perPage);
+                $usersSerialized = array_map(static fn(User $user) => $user->toArray(), $users);
+                $item->set($usersSerialized);
+                $item->tag(self::CACHE_TAG);
+
+                return $usersSerialized;
+            }
+        );
 
         return $userRepository->getUsers($page, $perPage);
     }
@@ -41,6 +62,7 @@ class UserService
         $user->setRoles($userDTO->roles);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+        $this->cache->invalidateTags([self::CACHE_TAG]);
 
         return $user;
     }
