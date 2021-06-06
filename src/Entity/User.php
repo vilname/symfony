@@ -46,29 +46,13 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     private string $roles;
 
     /**
-     * @ORM\Column(type="string", length=32, nullable=true, unique=true)
+     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="userLink")
      */
-    private string $token;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="apperticeSkill")
-     *
-     * @ORM\JoinTable(
-     *     name="user_skill",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
-     * )
-     */
-    private $userSkill;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="appertice")
-     */
-    private Collection $group;
+    private $groups;
 
     public function __construct()
     {
-        $this->userSkill = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +93,8 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     public function getRoles(): array
     {
         $roles = json_decode($this->roles, true, 512, JSON_THROW_ON_ERROR);
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_APPERTICE';
 
         return array_unique($roles);
     }
@@ -149,31 +135,6 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     }
 
     /**
-     * @return Collection
-     */
-    public function getApperticeSkill(): Collection
-    {
-        return $this->userSkill;
-    }
-
-    /**
-     * @param Collection $userSkill
-     */
-    public function setUserSkill(Collection $userSkill): void
-    {
-        $this->userSkill = $userSkill;
-    }
-
-    public function addUserSkill(Skill $userSkill) {
-        $this->userSkill->add($userSkill);
-    }
-
-    public function removeUserSkill(Skill $userSkill) {
-        $this->userSkill->removeElement($userSkill);
-    }
-
-
-    /**
      * @throws \JsonException
      */
     public function toArray(): array
@@ -186,5 +147,32 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
             'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
             'updatedAt' => $this->updatedAt->format('Y-m-d H:i:s'),
         ];
+    }
+
+    /**
+     * @return Collection|Group[]
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    public function addGroup(Group $group): self
+    {
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+            $group->addUserLink($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(Group $group): self
+    {
+        if ($this->groups->removeElement($group)) {
+            $group->removeUserLink($this);
+        }
+
+        return $this;
     }
 }

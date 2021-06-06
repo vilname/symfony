@@ -8,9 +8,9 @@ class AddUserDTO
 {
     private array $payload;
 
-    public function __construct(int $groupId, string $groupName, int $count)
+    public function __construct(int $groupId, string $userName, int $count)
     {
-        $this->payload = ['groupId' => $groupId, 'groupName' => $groupName, 'count' => $count];
+        $this->payload = ['groupId' => $groupId, 'userName' => $userName, 'count' => $count];
     }
 
     public function toAMQPMessage(): string

@@ -80,11 +80,17 @@ class Group
      */
     private $appertice;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="groups")
+     */
+    private $userLink;
+
     public function __construct()
     {
         $this->appertice = new ArrayCollection();
         $this->skill = new ArrayCollection();
         $this->teacher = new ArrayCollection();
+        $this->userLink = new ArrayCollection();
     }
 
     /**
@@ -228,6 +234,30 @@ class Group
     public function removeTeacher(Teacher $teacher): self
     {
         $this->teacher->removeElement($teacher);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUserLink(): Collection
+    {
+        return $this->userLink;
+    }
+
+    public function addUserLink(User $userLink): self
+    {
+        if (!$this->userLink->contains($userLink)) {
+            $this->userLink[] = $userLink;
+        }
+
+        return $this;
+    }
+
+    public function removeUserLink(User $userLink): self
+    {
+        $this->userLink->removeElement($userLink);
 
         return $this;
     }

@@ -34,7 +34,7 @@ class UserService
         return $userRepository->getUsers($page, $perPage);
     }
 
-    public function saveUser(User $user, UserDTO $userDTO): ?int
+    public function saveUser(User $user, UserDTO $userDTO): ?User
     {
         $user->setLogin($userDTO->login);
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $userDTO->password));
@@ -42,7 +42,7 @@ class UserService
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        return $user->getId();
+        return $user;
     }
 
     public function updateUser(int $userId, UserDTO $userDTO): bool
@@ -91,7 +91,7 @@ class UserService
         return $user;
     }
 
-    public function subscribe(int $groupId, int $userName): bool
+    public function subscribe(int $groupId, User $user): bool
     {
         $groupRepository = $this->entityManager->getRepository(Group::class);
         $group = $groupRepository->find($groupId);
@@ -99,12 +99,10 @@ class UserService
             return false;
         }
 
-        $userEntity = new User();
-        $userEntity->setLogin($userName);
-        $this->entityManager->persist($userEntity);
+        $user->removeGroup($group);
+        $user->addGroup($group);
+        $this->entityManager->persist($user);
         $this->entityManager->flush();
-
-        $userEntity->getId();
 
         return true;
     }
@@ -116,11 +114,12 @@ class UserService
         for ($i = 0; $i < $count; $i++) {
             $login = "{$userName}_#$i";
             $password = $userName;
-            $roles = json_encode('[ROLE_APPERTICE]');
+            $roles = json_encode(['ROLE_APPERTICE']);
             $data = compact('login', 'password', 'roles');
-            $userId = $this->saveUser(new User(), new UserDTO($data));
-            if ($userId !== null) {
-                $this->subscribe($group->getId(), $userId);
+
+            $user = $this->saveUser(new User(), new UserDTO($data));
+            if ($user !== null) {
+                $this->subscribe($group->getId(), $user);
                 $createdAppertice++;
             }
         }

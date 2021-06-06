@@ -43,15 +43,15 @@ class Controller
      * @RequestParam(name="count", requirements="\d+")
      * @RequestParam(name="async", requirements="0|1")
      */
-    public function addUserAction(int $groupId, string $groupName, int $count, int $async): Response
+    public function addUserAction(int $groupId, string $userName, int $count, int $async): Response
     {
         $group = $this->groupService->findUserById($groupId);
         if ($group !== null) {
             if ($async === 0) {
-                $createdAppertice = $this->userService->addUserItem($group, $groupName, $count);
+                $createdAppertice = $this->userService->addUserItem($group, $userName, $count);
                 $view = $this->view(['created' => $createdAppertice], 200);
             } else {
-                $message = $this->groupService->getApperticesMessages($group, $groupName, $count);
+                $message = $this->groupService->getApperticesMessages($group, $userName, $count);
                 $result = $this->asyncService->publishMultipleToExchange(AsyncService::ADD_USER, $message);
                 $view = $this->view(['success' => $result], $result ? 200 : 500);
             }
