@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\DoctrineEntityCreatedAtTrait;
 use App\Entity\Traits\DoctrineEntityUpdatedAtTrait;
-use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -53,6 +53,14 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getId(): ?int
@@ -149,6 +157,17 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
         ];
     }
 
+    public function toFeed(): array
+    {
+        return [
+            'id' => $this->id,
+            'login' => isset($this->login) ? $this->login : null,
+            'password' => $this->password,
+            'roles' => $this->getRoles(),
+            'createdAt' => isset($this->createdAt) ? $this->createdAt->format('Y-m-d h:i:s') : '',
+        ];
+    }
+
     /**
      * @return Collection|Group[]
      */
@@ -174,5 +193,13 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
         }
 
         return $this;
+    }
+
+    /**
+     * @Mapping\PrePersist
+     */
+    public function setCreatedAt(): void
+    {
+        $this->createdAt = DateTime::createFromFormat('U', (string)time());
     }
 }
