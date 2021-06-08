@@ -52,9 +52,15 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
      */
     private $groups;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="users")
+     */
+    private $skills;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     /**
@@ -200,5 +206,29 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     public function setCreatedAt(): void
     {
         $this->createdAt = DateTime::createFromFormat('U', (string)time());
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        $this->skills->removeElement($skill);
+
+        return $this;
     }
 }

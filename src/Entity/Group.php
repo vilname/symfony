@@ -61,35 +61,13 @@ class Group
     private $skill;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Teacher::class, inversedBy="groupTeacher")
-     * @ORM\JoinTable(
-     *     name="group_teacher",
-     *     joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="teacher_id", referencedColumnName="id")}
-     * )
-     */
-    private $teacher;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Appertice::class, inversedBy="group")
-     * @ORM\JoinTable(
-     *     name="group_appertice",
-     *     joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="appertice_id", referencedColumnName="id")}
-     * )
-     */
-    private $appertice;
-
-    /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="groups")
      */
     private $userLink;
 
     public function __construct()
     {
-        $this->appertice = new ArrayCollection();
         $this->skill = new ArrayCollection();
-        $this->teacher = new ArrayCollection();
         $this->userLink = new ArrayCollection();
     }
 
@@ -169,43 +147,6 @@ class Group
         return $this;
     }
 
-    public function getTeacher(): ?Teacher
-    {
-        return $this->teacher;
-    }
-
-    public function setTeacher(?Teacher $teacher): self
-    {
-        $this->teacher = $teacher;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Appertice[]
-     */
-    public function getAppertice(): Collection
-    {
-        return $this->appertice;
-    }
-
-
-    public function addAppertice(Appertice $appertice): self
-    {
-        if (!$this->appertice->contains($appertice)) {
-            $this->appertice[] = $appertice;
-        }
-
-        return $this;
-    }
-
-    public function removeAppertice(Appertice $appertice): self
-    {
-        $this->appertice->removeElement($appertice);
-
-        return $this;
-    }
-
     public function addSkill(Skill $skill): self
     {
         if (!$this->skill->contains($skill)) {
@@ -218,22 +159,6 @@ class Group
     public function removeSkill(Skill $skill): self
     {
         $this->skill->removeElement($skill);
-
-        return $this;
-    }
-
-    public function addTeacher(Teacher $teacher): self
-    {
-        if (!$this->teacher->contains($teacher)) {
-            $this->teacher[] = $teacher;
-        }
-
-        return $this;
-    }
-
-    public function removeTeacher(Teacher $teacher): self
-    {
-        $this->teacher->removeElement($teacher);
 
         return $this;
     }

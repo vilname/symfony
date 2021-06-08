@@ -43,10 +43,16 @@ class Skill
      */
     private $group;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="skills")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->skillAppertice = new ArrayCollection();
         $this->group = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -114,6 +120,33 @@ class Skill
             if ($group->getSkill() === $this) {
                 $group->setSkill(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeSkill($this);
         }
 
         return $this;
