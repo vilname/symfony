@@ -9,6 +9,15 @@ security:
             entity:
                 class: App\Entity\User
                 property: login
+        user_in_memory:
+            memory:
+                users:
+                    admin:
+                        password: 'my_pass'
+                        roles: 'ROLE_ADMIN'
+                    user:
+                        password: 'other_pass'
+                        roles: 'ROLE_USER'
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

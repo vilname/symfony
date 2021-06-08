@@ -11,10 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @ApiResource
  */
 class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterface
 {
@@ -195,9 +197,6 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
         return $this;
     }
 
-    /**
-     * @Mapping\PrePersist
-     */
     public function setCreatedAt(): void
     {
         $this->createdAt = DateTime::createFromFormat('U', (string)time());
