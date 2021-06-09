@@ -14,8 +14,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource
  */
 class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterface

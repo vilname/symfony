@@ -8,7 +8,7 @@ use App\DTO\TeacherDTO;
 use App\Entity\Skill;
 use App\Entity\Teacher;
 use App\Repository\TeacherRepository;
-use App\Symfony\Forms\TeacherType;
+use App\Symfony\Forms\UserType;
 use App\Symfony\Forms\UserOrganizationType;
 use App\Symfony\Helper;
 use Doctrine\ORM\EntityManagerInterface;
@@ -98,7 +98,7 @@ class TeacherService
             ->add('name', TextType::class)
             ->add('groupCount', IntegerType::class)
             ->add('teacherSkill', CollectionType::class, [
-                'entry_type' => TeacherType::class,
+                'entry_type' => UserType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
             ])

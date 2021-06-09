@@ -28,25 +28,14 @@ class Skill
     private string $skill;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Appertice", mappedBy="apperticeSkill")
-     */
-    private Collection $apperticeSkill;
-
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Teacher", mappedBy="teacher")
-     */
-    private Collection $skillTeacher;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="skill")
      */
-    private $group;
+    private Collection $group;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="skills")
      */
-    private $users;
+    private Collection $users;
 
     public function __construct()
     {

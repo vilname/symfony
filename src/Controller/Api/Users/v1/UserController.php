@@ -10,15 +10,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 /** @Route("/api/v1/user") */
 class UserController
 {
-    /**  @var @var UserService */
-    private $userService;
+    protected UserService $userService;
+    private Environment $twig;
 
-    public function __construct(UserService $userService) {
+    public function __construct(UserService $userService, Environment $twig) {
         $this->userService = $userService;
+        $this->twig = $twig;
     }
 
     /**
@@ -37,7 +39,7 @@ class UserController
     /**
      * @Route("", methods={"POST"})
      *
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function saveUserAction(Request $request): Response
     {
@@ -74,5 +76,39 @@ class UserController
         $result = $this->userService->updateUser($userId, $userDTO);
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
+    }
+
+    /**
+     * @Route("/form", methods={"GET"})
+     */
+    public function getFormAction(): Response
+    {
+        $form = $this->userService->getSaveForm();
+        $content = $this->twig->render('user.twig', [
+            'form' => $form->createView()
+        ]);
+
+        return new Response($content);
+    }
+
+    /**
+     * @Route("/form", methods={"POST"})
+     */
+    public function saveFormAction(Request $request): Response
+    {
+        $form = $this->userService->getSaveForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = new User();
+            $data = $form->getData();
+            $data['roles'] = json_encode([$data['roles']]);
+            $groupItemId = $this->userService->saveUser($user, new UserDTO($data));
+            [$data, $code] = ($groupItemId === null) ? [['success' => false], 400] : [['id' => $groupItemId], 200];
+
+            return new JsonResponse($data, $code);
+        } else {
+            return new JsonResponse($form->getErrors()[0]->getMessage());
+        }
     }
 }

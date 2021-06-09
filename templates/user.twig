@@ -12,8 +12,9 @@
     <h2>Форма учителя</h2>
     {{ form_start(form) }}
     {{ form_row(form._token) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.groupCount) }}
+    {{ form_row(form.login) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.roles) }}
 
     <h3>Teacher skill</h3>
     <ul class="linkedOrganizations" data-prototype='{{ form_widget(form.teacherSkill.vars.prototype)|e('html_attr') }}'>
