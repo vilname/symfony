@@ -109,8 +109,6 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     public function getRoles(): array
     {
         $roles = json_decode($this->roles, true, 512, JSON_THROW_ON_ERROR);
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_APPERTICE';
 
         return array_unique($roles);
     }

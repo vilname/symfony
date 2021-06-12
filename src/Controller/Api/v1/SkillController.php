@@ -22,12 +22,12 @@ class SkillController
     /**
      * @Route("", methods={"POST"})
      *
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function saveUserAction(Request $request): Response
     {
         $skillEntitny = $this->skillService->changeDataBeforeSave($request);
-        $skillId = $this->teacherService->saveTeacher($skillEntitny);
+        $skillId = $this->skillService->saveSkill($skillEntitny);
         [$data, $code] = $skillId === null ?
             [['success' => false], 400] :
             [['success' => true, 'userId' => $skillId], 200];
@@ -42,7 +42,7 @@ class SkillController
     {
         $perPage = $request->query->get('perPage');
         $page = $request->query->get('page');
-        $skills = $this->skillService->getTeacher($page ?? 0, $perPage ?? 20);
+        $skills = $this->skillService->getSkill($page ?? 0, $perPage ?? 20);
         $code = empty($users) ? 204 : 200;
 
         return new JsonResponse(['skills' => array_map(static fn(Skill $skill) => $skill->toArray(), $skills)], $code);

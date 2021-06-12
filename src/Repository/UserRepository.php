@@ -6,12 +6,13 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-    public function getUsers(int $page, int $perPage): array
+    public function getUsers(int $page, int $perPage, $roles = null): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('t')
-            ->from($this->getClassName(), 't')
-            ->orderBy('t.id', 'DESC')
+        $qb->select('u')
+            ->from($this->getClassName(), 'u')
+            ->where('u.roles like :roles')->setParameter('roles', "%$roles%")
+            ->orderBy('u.id', 'DESC')
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
 

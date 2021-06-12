@@ -51,15 +51,16 @@ class UserService
 
     /**
      * @return User[]
+     * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function getUsers(int $page, int $perPage): array
+    public function getUsers(int $page, int $perPage, $roles = null): array
     {
         $userRepository = $this->entityManager->getRepository(User::class);
 
 //        $this->cache->get(
 //            "user_{$page}_{$perPage}",
-//            function (ItemInterface $item) use ($userRepository, $page, $perPage) {
-//                $users = $userRepository->getUsers($page, $perPage);
+//            function (ItemInterface $item) use ($userRepository, $page, $perPage, $roles) {
+//                $users = $userRepository->getUsers($page, $perPage, $roles);
 //                $usersSerialized = array_map(static fn(User $user) => $user->toArray(), $users);
 //                $item->set($usersSerialized);
 //                $item->tag(self::CACHE_TAG);
@@ -68,7 +69,7 @@ class UserService
 //            }
 //        );
 
-        return $userRepository->getUsers($page, $perPage);
+        return $userRepository->getUsers($page, $perPage, $roles);
     }
 
 //    public function saveUser(User $user, UserDTO $userDTO): ?User

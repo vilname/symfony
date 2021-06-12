@@ -2,11 +2,8 @@
 
 namespace App\Controller\Api\Users\v1;
 
-use App\DTO\TeacherDTO;
-use App\DTO\UserDTO;
-use App\Entity\Teacher;
+
 use App\Entity\User;
-use App\Service\TeacherService;
 use App\Service\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,8 +44,8 @@ class TeacherController extends UserController
     {
         $perPage = $request->query->get('perPage');
         $page = $request->query->get('page');
-        $teachers = $this->userService->getUsers($page ?? 0, $perPage ?? 20);
-        $code = empty($users) ? 204 : 200;
+        $teachers = $this->userService->getUsers($page ?? 0, $perPage ?? 20, 'ROLE_TEACHER');
+        $code = empty($teachers) ? 204 : 200;
 
         return new JsonResponse(['teachers' => array_map(static fn(User $user) => $user->toArray(), $teachers)], $code);
     }
