@@ -4,6 +4,8 @@
 namespace App\Service;
 
 
+use App\DTO\AddUserDTO;
+use App\DTO\AddUserSkillDTO;
 use App\DTO\UserDTO;
 use App\Entity\Group;
 use App\Entity\Skill;
@@ -196,7 +198,7 @@ class UserService
             ->getForm();
     }
 
-    public function saveUser(User $user, UserDTO $userDTO): ?int
+    public function saveUser(User $user, UserDTO $userDTO): ?User
     {
         $user->setLogin($userDTO->login);
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $userDTO->password));
@@ -207,12 +209,14 @@ class UserService
         $this->entityManager->getEventManager();
 
         if ($userDTO->skillSelect) {
-            $user->addSkill($this->skillService->getEntity($userDTO->skillSelect));
+            foreach ($userDTO->skillSelect as $skill) {
+                $user->addSkill($skill);
+            }
         }
 
-        if (count($userDTO->teacherSkill)) {
+        if (count($userDTO->newUserSkill)) {
             $skill = new Skill();
-            foreach ($userDTO->teacherSkill as $item) {
+            foreach ($userDTO->newUserSkill as $item) {
                 $skill->setSkill($item['skill']);
                 $idSkill = $this->skillService->saveSkill($skill);
 
@@ -224,7 +228,49 @@ class UserService
         $this->entityManager->flush();
         $this->cache->invalidateTags([self::CACHE_TAG]);
 
-        return $user->getId();
+        return $user;
+    }
+
+    /**
+     * @param string $userName
+     * @throws \JsonException
+     */
+    public function saveUserRundomSkill(string $userName, int $count)
+    {
+        $userRepository = $this->entityManager->getRepository(Skill::class);
+        $skills = $userRepository->findAll();
+
+        for ($item = 0; $item <= $count; $item++) {
+            $skillSelect = [];
+            $randItemSkill = rand(2, 7);
+            for ($i=0;$i<=$randItemSkill;$i++) {
+                $randKeySkill = rand(0, count($skills)-1);
+                $skillSelect[$randKeySkill] = $skills[$randKeySkill];
+            }
+
+            $userModel = new User();
+            $userDTO = new UserDTO([
+                'login' => $userName.'-'.$item,
+                'password' => $userName,
+                'roles' => json_encode(['ROLE_APPERTICE']),
+                'skillSelect' => $skillSelect
+            ]);
+
+            $ids[] = $this->saveUser($userModel, $userDTO);
+        }
+
+        return $ids;
+
+    }
+
+    /**
+     * @param int $userId
+     * @param string $userName
+     * @return string
+     */
+    public function getUserMessages(int $userId, string $userName): string
+    {
+        return (new AddUserSkillDTO($userId, sprintf("%s #%s", $userName, $userId)))->toAMQPMessage();
     }
 
 }

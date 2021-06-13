@@ -4,13 +4,13 @@
 namespace App\DTO;
 
 
-class AddUserDTO
+class AddUserSkillDTO
 {
     private array $payload;
 
     public function __construct(int $groupId, string $userName, int $count = null)
     {
-        $this->payload = ['groupId' => $groupId, 'userName' => $userName, 'count' => $count];
+        $this->payload = ['userId' => $groupId, 'userName' => $userName, 'count' => $count];
     }
 
     public function toAMQPMessage(): string

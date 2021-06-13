@@ -9,6 +9,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 class AsyncService
 {
     public const ADD_USER = 'add_user';
+    public const ADD_USER_SKILL = 'add_user_skill';
 
     /** @var ProducerInterface[] */
     private array $producers;
@@ -21,22 +22,6 @@ class AsyncService
     public function registerProducer(string $producerName, ProducerInterface $producer): void
     {
         $this->producers[$producerName] = $producer;
-    }
-
-    public function publishToExchange(
-        string $producerName,
-        string $message,
-        ?string $routingKey = null,
-        ?array $additionalProperties = null
-    ): bool
-    {
-        if (isset($this->producers[$producerName])) {
-            $this->producers[$producerName]->publish($message, $routingKey ?? '', $additionalProperties ?? []);
-
-            return true;
-        }
-
-        return false;
     }
 
     public function publishMultipleToExchange(
@@ -58,4 +43,23 @@ class AsyncService
 
         return $sentCount;
     }
+
+    public function publishToExchange(
+        string $productName,
+        string $message,
+        ?string $routingKey = null,
+        ?array $additionalProperties = null
+    ): int
+    {
+        if (isset($this->producers[$productName])) {
+
+
+            $this->producers[$productName]->publish($message, $routingKey ?? '', $additionalProperties ?? []);
+
+            return true;
+        }
+
+        return false;
+    }
+
 }

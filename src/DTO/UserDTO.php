@@ -22,22 +22,20 @@ class UserDTO
 
     public array $roles;
 
-    public array $teacherSkill;
+    public array $newUserSkilll;
 
-    public int $skillSelect;
+    public array $skillSelect;
 
     /**
      * @throws \JsonException
      */
     public function __construct(array $data)
     {
-        dump($data);
-
         $this->login = $data['login'] ?? '';
         $this->password = $data['password'] ?? '';
         $this->roles = json_decode($data['roles'], true, 512, JSON_THROW_ON_ERROR) ?? [];
-        $this->teacherSkill = $data['teacherSkill'] ?? [];
-        $this->skillSelect = $data['skillSelect'] ?? 0;
+        $this->newUserSkill = $data['newUserSkill'] ?? [];
+        $this->skillSelect = $data['skillSelect'] ?? [];
     }
 
     public static function fromEntity(User $user): self

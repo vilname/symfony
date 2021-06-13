@@ -23,6 +23,8 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     use DoctrineEntityCreatedAtTrait;
     use DoctrineEntityUpdatedAtTrait;
 
+    public const USER_ITEM = 'user_skill';
+
     /**
      * @ORM\Column(name="id", type="bigint", unique=true)
      * @ORM\GeneratedValue(strategy="IDENTITY")

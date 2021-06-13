@@ -48,7 +48,8 @@ services:
 
     App\Service\AsyncService:
         calls:
-            - [ 'registerProducer', [ !php/const App\Service\AsyncService::ADD_USER, '@old_sound_rabbit_mq.add_user_producer' ] ]
+#            - [ 'registerProducer', [ !php/const App\Service\AsyncService::ADD_USER, '@old_sound_rabbit_mq.add_user_producer' ] ]
+            - [ 'registerProducer', [ !php/const App\Service\AsyncService::ADD_USER_SKILL, '@old_sound_rabbit_mq.add_user_skill_producer' ] ]
 
     redis_client:
         class: Redis
