@@ -28,6 +28,8 @@ class Consumer implements ConsumerInterface
 
     public function execute(AMQPMessage $msg): int
     {
+        dump('11111');
+
         try {
             $message = Message::createFromQueue($msg->getBody());
             $errors = $this->validator->validate($message);

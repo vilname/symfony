@@ -52,10 +52,7 @@ class AsyncService
     ): int
     {
         if (isset($this->producers[$productName])) {
-
-
             $this->producers[$productName]->publish($message, $routingKey ?? '', $additionalProperties ?? []);
-
             return true;
         }
 

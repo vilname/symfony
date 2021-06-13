@@ -8,9 +8,9 @@ class AddUserSkillDTO
 {
     private array $payload;
 
-    public function __construct(int $groupId, string $userName, int $count = null)
+    public function __construct(string $userName, int $count = null)
     {
-        $this->payload = ['userId' => $groupId, 'userName' => $userName, 'count' => $count];
+        $this->payload = ['userName' => $userName, 'count' => $count];
     }
 
     public function toAMQPMessage(): string

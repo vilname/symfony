@@ -30,6 +30,9 @@ class Consumer implements ConsumerInterface
         $this->userService = $userService;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function execute(AMQPMessage $msg): int
     {
         dump($msg->getBody());
@@ -45,8 +48,7 @@ class Consumer implements ConsumerInterface
         }
 
 
-
-        $this->userService->saveUserRundomSkill($message->getUserLogin(), $message->getCount());
+        $this->userService->saveUserRundomSkill($message->getUserName(), $message->getCount());
 
         $this->entityManager->clear();
         $this->entityManager->getConnection()->close();

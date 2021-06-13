@@ -264,13 +264,13 @@ class UserService
     }
 
     /**
-     * @param int $userId
      * @param string $userName
+     * @param int $count
      * @return string
      */
-    public function getUserMessages(int $userId, string $userName): string
+    public function getUserMessages(string $userName, int $count): string
     {
-        return (new AddUserSkillDTO($userId, sprintf("%s #%s", $userName, $userId)))->toAMQPMessage();
+        return (new AddUserSkillDTO($userName, $count))->toAMQPMessage();
     }
 
 }
