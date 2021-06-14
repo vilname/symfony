@@ -4,15 +4,11 @@
 namespace App\Service;
 
 use App\DTO\AddUserDTO;
-use App\DTO\UserDTO;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use App\Entity\Appertice;
 use App\Entity\Group;
 use App\Entity\Skill;
-use App\Entity\Teacher;
 use App\Symfony\Forms\GroupType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,15 +22,18 @@ class GroupService
     private EntityManagerInterface $entityManager;
     private FormFactoryInterface $formFactory;
     private UserService $userService;
+    private SkillService $skillService;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         FormFactoryInterface $formFactory,
-        UserService $userService
+        UserService $userService,
+        SkillService $skillService
     ) {
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
         $this->userService = $userService;
+        $this->skillService = $skillService;
     }
 
     public function getGroup(int $page, int $perPage): array
@@ -47,17 +46,16 @@ class GroupService
     public function getEntityField(Form $form)
     {
         $groupEntitny = new Group();
-
         $formData = $form->getData();
 
-        $this->appertice = $this->entityManager->getRepository(Appertice::class)->find($formData['appertice']);
-        $this->skill = $this->entityManager->getRepository(Skill::class)->find($formData['skill']);
-        $this->teacher = $this->entityManager->getRepository(Teacher::class)->find($formData['teacher']);
-
         $groupEntitny->setName($formData['groupName']);
-        $groupEntitny->addAppertice($this->appertice);
-        $groupEntitny->addSkill($this->skill);
-        $groupEntitny->addTeacher($this->teacher);
+        if ($formData['skill']) {
+            $skills = $this->skillService->getEntity($formData['skill']);
+        }
+
+        foreach ($skills as $skill) {
+            $groupEntitny->addSkill($skill);
+        }
 
         return $groupEntitny;
     }
@@ -66,8 +64,6 @@ class GroupService
     {
         $groupManager->setSkillCount(8);
         $groupManager->setActive(true);
-        $groupManager->setCreatedAt(new DateTime());
-        $groupManager->setUpdatedAt(new DateTime());
 
         $this->entityManager->persist($groupManager);
         $this->entityManager->flush();
@@ -80,14 +76,10 @@ class GroupService
         // return $this->formFactory->createBuilder(FormType::class, GroupDTO::formEntity($group))
         return $this->formFactory->createBuilder(FormType::class)
             ->add('groupName', TextType::class)
-            ->add('appertice', ChoiceType::class, [
-                'choices' => $this->getEntityAllData(Appertice::class)
-            ])
             ->add('skill', ChoiceType::class, [
+                'placeholder'  =>  'Выберите вариант',
+                'multiple' => true,
                 'choices' => $this->getEntitySkillAllData(Skill::class)
-            ])
-            ->add('teacher', ChoiceType::class, [
-                'choices' => $this->getEntityAllData(Teacher::class)
             ])
             ->add('submit', SubmitType::class)
             ->getForm();
@@ -175,16 +167,16 @@ class GroupService
             ->getForm();
     }
 
-    public function getEntityAllData ($className) {
-        $repository = $this->entityManager->getRepository($className);
-        $result = $repository->findAll();
-
-        foreach ($result as $item) {
-            $data[$item->getName()] = $item->getId();
-        }
-
-        return $data;
-    }
+//    public function getEntityAllData ($className) {
+//        $repository = $this->entityManager->getRepository($className);
+//        $result = $repository->findAll();
+//
+//        foreach ($result as $item) {
+//            $data[$item->getName()] = $item->getId();
+//        }
+//
+//        return $data;
+//    }
 
     public function getEntitySkillAllData ($className) {
         $repository = $this->entityManager->getRepository($className);

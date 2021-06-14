@@ -32,5 +32,10 @@ jQuery(document).ready(function() {
         addOrganizationForm($collectionHolder, $newLinkLi);
     });
 
+    $(document).on('click', '.button-js', (e) => {
+        var selectItem = $(".select-item-js").children();
+        $('.select-item-js').append(`${selectItem[0].outerHTML}`);
+    });
+
 });
 

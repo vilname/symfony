@@ -191,6 +191,7 @@ class UserService
             ])
             ->add('skillSelect', ChoiceType::class, [
                 'placeholder'  =>  'Выберите вариант',
+                'multiple' => true,
                 'choices' => Helper::getChoicesData($skill),
                 'required' => false
             ])
@@ -204,12 +205,11 @@ class UserService
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $userDTO->password));
         $user->setRoles($userDTO->roles);
 
-        $skillRepository = $this->entityManager->getRepository(Skill::class);
-        $skillRepository->findOneBy(['id' => $userDTO->skillSelect]);
         $this->entityManager->getEventManager();
 
         if ($userDTO->skillSelect) {
-            foreach ($userDTO->skillSelect as $skill) {
+            $skills = $this->skillService->getEntity($userDTO->skillSelect);
+            foreach ($skills as $skill) {
                 $user->addSkill($skill);
             }
         }

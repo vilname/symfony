@@ -31,6 +31,10 @@ class UserDTO
      */
     public function __construct(array $data)
     {
+        if (is_string($data['roles'])) {
+            $data['roles'] = json_encode([$data['roles']]);
+        }
+
         $this->login = $data['login'] ?? '';
         $this->password = $data['password'] ?? '';
         $this->roles = json_decode($data['roles'], true, 512, JSON_THROW_ON_ERROR) ?? [];

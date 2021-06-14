@@ -16,7 +16,7 @@ use Twig\Environment;
 class UserController
 {
     protected UserService $userService;
-    private Environment $twig;
+    protected Environment $twig;
 
     public function __construct(UserService $userService, Environment $twig) {
         $this->userService = $userService;

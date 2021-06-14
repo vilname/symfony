@@ -69,9 +69,22 @@ class SkillService
         return $this->saveSkill($skill);
     }
 
-    public function getEntity(int $id)
+    public function getEntity(array $id)
     {
         $teacherRepository = $this->entityManager->getRepository(Skill::class);
-        return $teacherRepository->findOneBy(['id' => $id]);
+        return $teacherRepository->findBy(['id' => $id]);
     }
+
+//    public function getSkills( $skillSelect)
+//    {
+//        if ($skillSelect) {
+//            $skills = $this->getEntity($skillSelect);
+//        }
+//
+//        foreach ($skills as $skill) {
+//            $groupEntitny->addSkill($skill);
+//        }
+//    }
+
 }
+

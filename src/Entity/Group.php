@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="`group`")
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  */
-class Group
+class Group implements HasMetaTimestampsInterface
 {
     use DoctrineEntityCreatedAtTrait;
     use DoctrineEntityUpdatedAtTrait;

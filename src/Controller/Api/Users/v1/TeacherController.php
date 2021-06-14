@@ -3,6 +3,7 @@
 namespace App\Controller\Api\Users\v1;
 
 
+use App\DTO\UserDTO;
 use App\Entity\User;
 use App\Service\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -62,6 +63,39 @@ class TeacherController extends UserController
 //    }
 
 
+    /**
+     * @Route("/form", methods={"POST"})
+     */
+    public function saveFormAction(Request $request): Response
+    {
+        $form = $this->userService->getSaveForm();
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $formData = $form->getData();
+            $user = new User();
+            $userDTO = new UserDTO($formData);
+            $userId = $this->userService->saveUser($user, $userDTO);
+            [$data, $code] = ($userId === null) ? [['success' => false], 400] : [['id' => $userId], 200];
+
+            return new JsonResponse($data, $code);
+        } else {
+            return new JsonResponse($form->getErrors()[0]->getMessage());
+        }
+    }
+
+    /**
+     * @Route("/form", methods={"GET"})
+     */
+    public function getFormAction(): Response
+    {
+        $form = $this->userService->getSaveForm();
+        $content = $this->twig->render('user.twig', [
+            'form' => $form->createView()
+        ]);
+
+        return new Response($content);
+    }
 
 }
