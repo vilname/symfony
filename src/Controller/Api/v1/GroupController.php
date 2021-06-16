@@ -22,27 +22,6 @@ class GroupController
         $this->twig = $twig;
     }
 
-    // /**
-    //  * @Route("", methods={"POST"})
-    //  *
-    //  * @throws JsonException
-    //  */
-    // public function saveGroupAction(Request $request, GroupDTO $groupDTO): Response
-    // {
-    //     // $this->appertice = $this->entityManager->getRepository(Appertice::class)->find($request->request->get('appertice'));
-    //     // $this->groupId = $this->entityManager->getRepository(Group::class)->find($request->request->get('group_id'));
-    //     // $this->skill = $this->entityManager->getRepository(Skill::class)->find($request->request->get('skill'));
-    //     // $this->teacher = $this->entityManager->getRepository(Teacher::class)->find($request->request->get('teacher'));
-
-    //     $groupId = $this->groupService->getEntityField($request);
-
-    //     [$data, $code] = $groupId === null ?
-    //         [['success' => false], 400] :
-    //         [['success' => true], 200];
-
-    //     return new JsonResponse($data, $code);
-    // }
-
     /**
     * @Route("/form", methods={"POST"})
     */
@@ -93,32 +72,6 @@ class GroupController
                 static fn(Group $group) => $group->toArray(), $group)
             ], $code
         );
-    }
-
-    /**
-     * @Route("/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
-     */
-    public function deleteGroupAction(int $id): Response
-    {
-
-        $group = $this->groupService->findGroupById($id);
-        if ($group === null) {
-            return false;
-        }
-
-        $result = $this->groupService->deleteGroup($group);
-
-        return new JsonResponse(['success' => $result], $result ? 200 : 404);
-    }
-
-    /**
-     * @Route("", methods={"PATCH"})
-     */
-    public function updateUserAction(Request $request): Response
-    {
-        $result = $this->groupService->updateGroup($request);
-
-        return new JsonResponse(['success' => $result], $result ? 200 : 404);
     }
 
     /**

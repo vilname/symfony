@@ -6,6 +6,7 @@ namespace App\Controller\Api\Users\v1;
 use App\DTO\UserDTO;
 use App\Entity\User;
 use App\Service\UserService;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +18,12 @@ class UserController
 {
     protected UserService $userService;
     protected Environment $twig;
+    protected LoggerInterface $logger;
 
-    public function __construct(UserService $userService, Environment $twig) {
+    public function __construct(UserService $userService, Environment $twig, LoggerInterface $elasticsearchLogger) {
         $this->userService = $userService;
         $this->twig = $twig;
+        $this->logger = $elasticsearchLogger;
     }
 
     /**
@@ -110,5 +113,10 @@ class UserController
         } else {
             return new JsonResponse($form->getErrors()[0]->getMessage());
         }
+    }
+
+    public function findUsersGroup()
+    {
+
     }
 }
