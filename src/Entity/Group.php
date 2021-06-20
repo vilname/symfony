@@ -39,7 +39,7 @@ class Group implements HasMetaTimestampsInterface
      *
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $skillCount;
+    private int $maxCountAppertice;
 
 
     /**
@@ -106,17 +106,17 @@ class Group implements HasMetaTimestampsInterface
     /**
      * @return int
      */
-    public function getSkillCount(): int
+    public function getMaxCountAppertice(): int
     {
-        return $this->skillCount;
+        return $this->maxCountAppertice;
     }
 
     /**
-     * @param int $skillCount
+     * @param int $maxCountAppertice
      */
-    public function setSkillCount(int $skillCount): void
+    public function setMaxCountAppertice(int $maxCountAppertice): void
     {
-        $this->skillCount = $skillCount;
+        $this->maxCountAppertice = $maxCountAppertice;
     }
 
     /**

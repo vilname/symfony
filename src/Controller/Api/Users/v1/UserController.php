@@ -6,7 +6,6 @@ namespace App\Controller\Api\Users\v1;
 use App\DTO\UserDTO;
 use App\Entity\User;
 use App\Service\UserService;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,14 +15,19 @@ use Twig\Environment;
 /** @Route("/api/v1/user") */
 class UserController
 {
+
     protected UserService $userService;
     protected Environment $twig;
-    protected LoggerInterface $logger;
 
-    public function __construct(UserService $userService, Environment $twig, LoggerInterface $elasticsearchLogger) {
+
+    public function __construct(
+        UserService $userService,
+        Environment $twig
+    )
+    {
         $this->userService = $userService;
         $this->twig = $twig;
-        $this->logger = $elasticsearchLogger;
+
     }
 
     /**
@@ -115,8 +119,18 @@ class UserController
         }
     }
 
-    public function findUsersGroup()
+    /**
+     * @Route("/save-user-group", methods={"GET"})
+     */
+    public function saveUserGroup(Request $request): Response
     {
 
+        $page = $request->query->get('page');
+        $perPage = $request->query->get('perPage');
+        $users = $this->userService->saveUserGroup($page ?? 0, $perPage ?? 20);
+
+        [$data, $code] = ($users === null) ? [['success' => false], 400] : [['users' => $users], 200];
+
+        return new JsonResponse($data, $code);
     }
 }

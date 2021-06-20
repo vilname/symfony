@@ -12,29 +12,27 @@ class UserRepository extends EntityRepository
         $qb->select('u')
             ->from($this->getClassName(), 'u')
             ->where('u.roles like :roles')->setParameter('roles', "%$roles%")
-            ->orderBy('u.id', 'DESC')
+            ->orderBy('u.id', 'ASC')
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
 
         return $qb->getQuery()->enableResultCache(null, "user_{$page}_{$perPage}")->getResult();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findUsersGroup(array $skills)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = sprintf('SELECT group_id, count(gs.skill_id) as cnt FROM public.group_skill gs
+            WHERE gs.skill_id IN (%s) GROUP BY gs.group_id ORDER BY cnt DESC' , implode(',', $skills));
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAllAssociative();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?User

@@ -21,18 +21,15 @@ class GroupService
 {
     private EntityManagerInterface $entityManager;
     private FormFactoryInterface $formFactory;
-    private UserService $userService;
     private SkillService $skillService;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         FormFactoryInterface $formFactory,
-        UserService $userService,
         SkillService $skillService
     ) {
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
-        $this->userService = $userService;
         $this->skillService = $skillService;
     }
 
@@ -60,15 +57,14 @@ class GroupService
         return $groupEntitny;
     }
 
-    public function saveGroup(Group $groupManager): ?int
+    public function saveGroup(Group $groupEntity): ?int
     {
-        $groupManager->setSkillCount(8);
-        $groupManager->setActive(true);
+        $groupEntity->setActive(true);
 
-        $this->entityManager->persist($groupManager);
+        $this->entityManager->persist($groupEntity);
         $this->entityManager->flush();
 
-        return $groupManager->getId();
+        return $groupEntity->getId();
     }
 
     public function getSaveForm(): FormInterface

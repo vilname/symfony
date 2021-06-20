@@ -63,9 +63,6 @@ services:
             - '@redis_client'
             - 'my_app'
 
-    App\Service\UserService:
-        arguments:
-            $cache: '@redis_adapter'
 
 
 

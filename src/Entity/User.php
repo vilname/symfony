@@ -12,6 +12,7 @@ use JsonSerializable;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use ApiPlatform\Core\Annotation\ApiResource;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="`user`")
@@ -36,6 +37,7 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
      * @var string
      *
      * @ORM\Column(type="string", length=32, nullable=false, unique=true)
+     * @JMS\Groups({"elastica"})
      */
     private string $login;
 
@@ -46,6 +48,7 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
 
     /**
      * @ORM\Column(type="string", length=1024)
+     * @JMS\Groups({"elastica"})
      */
     private string $roles;
 
@@ -56,6 +59,7 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
 
     /**
      * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="users")
+     * @JMS\Groups({"elastica"})
      */
     private $skills;
 
