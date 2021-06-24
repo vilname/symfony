@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Consumer\AddUser;
+namespace App\Consumer\AddUserGroup;
 
 
-use App\Consumer\AddUser\Input\Message;
+use App\Consumer\AddUserGroup\Input\Message;
 use App\Entity\Group;
 use App\Service\GroupService;
 use App\Service\UserService;
@@ -28,7 +28,6 @@ class Consumer implements ConsumerInterface
 
     public function execute(AMQPMessage $msg): int
     {
-        dump('11111');
 
         try {
             $message = Message::createFromQueue($msg->getBody());
@@ -40,13 +39,7 @@ class Consumer implements ConsumerInterface
             return $this->reject($e->getMessage());
         }
 
-        $groupRepository = $this->entityManager->getRepository(Group::class);
-        $group = $groupRepository->find($message->getGroupId());
-        if (!($group instanceof Group)) {
-            return $this->reject(sprintf('Группа с Id %s не была найдена', $message->getGroupId()));
-        }
-
-        $this->userService->addUserItem($group, $message->getUserName(), $message->getCount());
+        $users = $this->userService->saveUserGroup($message->getPage() ?? 0, $message->getPerPage() ?? 20);
 
         $this->entityManager->clear();
         $this->entityManager->getConnection()->close();

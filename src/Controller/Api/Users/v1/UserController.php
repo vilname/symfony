@@ -118,19 +118,4 @@ class UserController
             return new JsonResponse($form->getErrors()[0]->getMessage());
         }
     }
-
-    /**
-     * @Route("/save-user-group", methods={"GET"})
-     */
-    public function saveUserGroup(Request $request): Response
-    {
-
-        $page = $request->query->get('page');
-        $perPage = $request->query->get('perPage');
-        $users = $this->userService->saveUserGroup($page ?? 0, $perPage ?? 20);
-
-        [$data, $code] = ($users === null) ? [['success' => false], 400] : [['users' => $users], 200];
-
-        return new JsonResponse($data, $code);
-    }
 }

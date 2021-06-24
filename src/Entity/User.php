@@ -24,8 +24,6 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     use DoctrineEntityCreatedAtTrait;
     use DoctrineEntityUpdatedAtTrait;
 
-    public const USER_ITEM = 'user_skill';
-
     /**
      * @ORM\Column(name="id", type="bigint", unique=true)
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -51,6 +49,11 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
      * @JMS\Groups({"elastica"})
      */
     private string $roles;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private ?int $maxCountGroup = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="userLink")
@@ -137,6 +140,22 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
     public function getUsername()
     {
         return $this->login;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMaxCountGroup(): ?int
+    {
+        return $this->maxCountGroup;
+    }
+
+    /**
+     * @param int|null $maxCountGroup
+     */
+    public function setMaxCountGroup(?int $maxCountGroup): void
+    {
+        $this->maxCountGroup = $maxCountGroup;
     }
 
     public function eraseCredentials()

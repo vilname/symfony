@@ -8,7 +8,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 class AsyncService
 {
-    public const ADD_USER = 'add_user';
+    public const ADD_USER_GROUP = 'add_user_group';
     public const ADD_USER_SKILL = 'add_user_skill';
 
     /** @var ProducerInterface[] */
