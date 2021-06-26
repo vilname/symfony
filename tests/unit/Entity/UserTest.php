@@ -69,6 +69,12 @@ class UserTest extends TestCase
         $user = $this->setCreatedAtWithDelay($user, $delay);
         $actual = $user->toFeed();
 
+//        dump("expected \n");
+//        dump($expected);
+//
+//        dump("actual \n");
+//        dump($actual);
+
         static::assertSame($expected, $actual, 'User::toFeed should return correct result');
     }
 
