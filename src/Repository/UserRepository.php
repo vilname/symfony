@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
@@ -34,15 +35,20 @@ class UserRepository extends EntityRepository
     }
 
 
-    /*
-    public function findOneBySomeField($value): ?User
+    public function findUserNotGroup($role)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT * FROM \"user\" WHERE id NOT IN (SELECT user_id FROM public.group_user) AND roles LIKE '%$role%'";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        $result = [];
+        while ($field = $stmt->fetch()) {
+            $result[] = User::setMap($field);
+        }
+
+        return $result;
     }
-    */
+
 }

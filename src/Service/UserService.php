@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use App\Symfony\Forms\UserType;
 use App\Symfony\Helper;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -189,6 +190,20 @@ class UserService
             ->getForm();
     }
 
+    public function getSearchUserGroup(): FormInterface
+    {
+        $userRepository = $this->entityManager->getRepository(User::class);
+        $users = $userRepository->findUserNotGroup('ROLE_APPERTICE');
+
+        return $this->formFactory->createBuilder(FormType::class)
+            ->add('users', ChoiceType::class, [
+                'placeholder' => 'Выберите вариант',
+                'choices' => Helper::getChoicesDataUsers($users),
+                'required' => false
+            ])
+            ->getForm();
+    }
+
     public function saveUser(User $user, UserDTO $userDTO): ?User
     {
         $user->setLogin($userDTO->login);
@@ -325,6 +340,104 @@ class UserService
 
 
         return $userDTO;
+    }
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function findFreePlaceAppertice($userId): array
+    {
+        $userRepository = $this->entityManager->getRepository(User::class);
+        $groupRepository = $this->entityManager->getRepository(Group::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy(['id' => $userId]);
+        try {
+
+            foreach ($user->getSkills()->getValues() as $skill) {
+                $skills[] = $skill->getId();
+            }
+
+            foreach ($userRepository->findUsersGroup($skills) as $group) {
+                $groups[] = $group['group_id'];
+                $result['best_groups'][$group['group_id']] = $group;
+            }
+        } catch (EntityNotFoundException $e) {
+
+        }
+
+        /** @var Group[] $groupItem */
+        $groupItem = $groupRepository->findBy(['id' => $groups]);
+
+        $saveGroup = false;
+        $result['best_free_groups'] = ['message' => 'Свободных мест в группах нет'];
+        foreach ($groupItem as $group) {
+
+            $result['best_groups'][$group->getId()]['group_name'] = $group->getName();
+
+            if (count($group->getUserLink()->getValues()) < $group->getMaxCountAppertice() && !$saveGroup) {
+                $result['best_free_groups'] = [
+                    'group_name' => $group->getName()
+                ];
+                $saveGroup = true;
+            }
+        }
+
+        return $result;
+
+    }
+
+    public function getGraphQl()
+    {
+
+        $script = 'query {
+            users(roles: "ROLE_APPERTICE", first: 3){
+            edges {
+              node {
+                id
+                _id
+                login
+              }
+            }
+          }
+        }
+        ';
+
+        $ch = curl_init('http://localhost:7777/api-platform/graphql');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $script);
+
+// Или предать массив строкой:
+// curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($array, '', '&'));
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $html = curl_exec($ch);
+
+        dump($html);
+
+        curl_close($ch);
+
+        die();
+
+//        curl "http://localhost:7777/api-platform/graphql" ^
+//    -H "Connection: keep-alive" ^
+//    -H "X-KL-Ajax-Request: Ajax_Request" ^
+//    -H "Accept: application/json" ^
+//    -H "sec-ch-ua-mobile: ?0" ^
+//    -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" ^
+//    -H "sec-ch-ua: ^\^" Not;A Brand^\^";v=^\^"99^\^", ^\^"Google Chrome^\^";v=^\^"91^\^", ^\^"Chromium^\^";v=^\^"91^\^"" ^
+//    -H "Content-Type: application/json" ^
+//    -H "Origin: http://localhost:7777" ^
+//    -H "Sec-Fetch-Site: same-origin" ^
+//    -H "Sec-Fetch-Mode: cors" ^
+//    -H "Sec-Fetch-Dest: empty" ^
+//    -H "Referer: http://localhost:7777/api-platform/graphql?query=^%^7B^%^0A^%^09users(roles^%^3A^%^20^%^22ROLE_APPERTICE^%^22^%^2C^%^20first^%^3A^%^203)^%^7B^%^0A^%^20^%^20^%^20^%^20edges^%^20^%^7B^%^0A^%^20^%^20^%^20^%^20^%^20^%^20node^%^20^%^7B^%^0A^%^20^%^20^%^20^%^20^%^20^%^20^%^20^%^20id^%^0A^%^20^%^20^%^20^%^20^%^20^%^20^%^20^%^20_id^%^0A^%^20^%^20^%^20^%^20^%^20^%^20^%^20^%^20login^%^0A^%^20^%^20^%^20^%^20^%^20^%^20^%^7D^%^0A^%^20^%^20^%^20^%^20^%^7D^%^0A^%^20^%^20^%^7D^%^0A^%^7D^%^0A^%^0A^%^0A" ^
+//    -H "Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7" ^
+//    -H "Cookie: sc=Gl0dwoK6fSWUeu58gPADjNRDNjoKIxHn; PHPSESSID=20c5fd7d6ab069d3c2b8dd74499adbbf" ^
+//    --data-raw "^{^\^"query^\^":^\^"^{^\^\n^\^\tusers(roles: ^\^\^\^"ROLE_APPERTICE^\^\^\^", first: 3)^{^\^\n    edges ^{^\^\n      node ^{^\^\n        id^\^\n        _id^\^\n        login^\^\n      ^}^\^\n    ^}^\^\n  ^}^\^\n^}^\^\n^\^\n^\^\n^\^",^\^"variables^\^":null^}" ^
+//    --compressed
     }
 
 }

@@ -10,10 +10,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ORM\Table(name="`group`")
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
+ * @ApiResource
  */
 class Group implements HasMetaTimestampsInterface
 {
@@ -135,7 +139,10 @@ class Group implements HasMetaTimestampsInterface
         $this->active = $active;
     }
 
-    public function getSkill(): ?Skill
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkill(): Collection
     {
         return $this->skill;
     }

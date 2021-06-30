@@ -37,5 +37,7 @@ jQuery(document).ready(function() {
         $('.select-item-js').append(`${selectItem[0].outerHTML}`);
     });
 
+
+
 });
 

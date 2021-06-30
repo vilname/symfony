@@ -118,4 +118,46 @@ class UserController
             return new JsonResponse($form->getErrors()[0]->getMessage());
         }
     }
+
+    /**
+     * @Route("/search-user-group", methods={"GET"})
+     */
+    public function findUserGroup(): Response
+    {
+        $form = $this->userService->getSearchUserGroup();
+
+        $content = $this->twig->render('find-group.twig', [
+            'form' => $form->createView()
+        ]);
+
+        return new Response($content);
+
+    }
+
+    /**
+     * @Route("/search-user-group", methods={"POST"})
+     */
+    public function findUserGroupResult(Request $request): Response
+    {
+        $groups = $this->userService->findFreePlaceAppertice($request->request->get('id'));
+
+        return new JsonResponse($groups);
+
+    }
+
+    /**
+     * @Route("/user-list", methods={"GET"})
+     */
+    public function getUserList(): Response
+    {
+
+//        $form = $this->userService->getSearchUserGroup();
+
+        $this->userService->getGraphQl();
+
+        $content = $this->twig->render('user-list.twig');
+
+        return new Response($content);
+
+    }
 }

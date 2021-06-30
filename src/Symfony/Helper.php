@@ -15,4 +15,14 @@ class Helper
 
         return $result;
     }
+
+    public static function getChoicesDataUsers(array $fields)
+    {
+        $result = [];
+        foreach ($fields as $item) {
+            $result[$item->getLogin()] = $item->getId();
+        }
+
+        return $result;
+    }
 }

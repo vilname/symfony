@@ -13,11 +13,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use ApiPlatform\Core\Annotation\ApiResource;
 use JMS\Serializer\Annotation as JMS;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ORM\Table(name="`user`")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource
+ * @ApiFilter(SearchFilter::class, properties={"roles":"partial"})
  */
 class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterface
 {
@@ -253,5 +256,18 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
         $this->skills->removeElement($skill);
 
         return $this;
+    }
+
+    /**
+     * @param array $data
+     * @return User
+     */
+    public static function setMap(array $data)
+    {
+        $o = new self();
+        $o->setid($data['id']);
+        $o->setLogin($data['login']);
+
+        return $o;
     }
 }
