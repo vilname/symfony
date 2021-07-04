@@ -22,13 +22,13 @@ class UserDTO
 
     public array $roles;
 
-    public array $newUserSkilll;
+    public array $newUserSkill;
 
     public array $skillSelect;
 
     public ?int $groupId; // пишу максимально подходящую группы пользователю
 
-    public string $message; // пишу сообщение
+    public ?string $message; // пишу сообщение
 
     /**
      * @throws \JsonException
@@ -47,6 +47,7 @@ class UserDTO
         $this->newUserSkill = $data['newUserSkill'] ?? [];
         $this->skillSelect = $data['skillSelect'] ?? [];
         $this->groupId = $data['groupId'] ?? 0;
+        $this->message = $data['message'] ?? '';
     }
 
     public static function fromEntity(User $user): self
@@ -55,8 +56,8 @@ class UserDTO
             'login' => $user->getLogin(),
             'password' => $user->getPassword(),
             'roles' => $user->getRoles(),
-            'groupId' => isset($user->groupId) ? $user->groupId : 0,
-            'message' => isset($user->message) ? $user->message : ''
+            'groupId' => isset($user->groupId) ?? 0,
+            'message' => isset($user->message) ?? ''
         ]);
     }
 }

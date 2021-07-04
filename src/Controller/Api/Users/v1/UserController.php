@@ -127,11 +127,11 @@ class UserController
         $form = $this->userService->getSearchUserGroup();
 
         $content = $this->twig->render('find-group.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'title' => 'Поиск группы для пользователя'
         ]);
 
         return new Response($content);
-
     }
 
     /**
@@ -150,14 +150,25 @@ class UserController
      */
     public function getUserList(): Response
     {
-
-//        $form = $this->userService->getSearchUserGroup();
-
         $this->userService->getGraphQl();
-
         $content = $this->twig->render('user-list.twig');
 
         return new Response($content);
 
+    }
+
+    /**
+     * @Route("/search-teacher-group", methods={"GET"})
+     */
+    public function getTeacherGroup(Request $request)
+    {
+        $form = $this->userService->freeTeacher($request);
+
+        $content = $this->twig->render('find-group.twig', [
+            'form' => $form->createView(),
+            'title' => 'Свободные учителя'
+        ]);
+
+        return new Response($content);
     }
 }

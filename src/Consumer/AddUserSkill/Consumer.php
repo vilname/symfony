@@ -45,7 +45,6 @@ class Consumer implements ConsumerInterface
             return $this->reject($e->getMessage());
         }
 
-
         $this->userService->saveUserRundomSkill($message->getUserName(), $message->getCount());
 
         $this->entityManager->clear();

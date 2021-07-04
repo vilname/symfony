@@ -5,8 +5,6 @@ namespace App\Consumer\AddUserGroup;
 
 
 use App\Consumer\AddUserGroup\Input\Message;
-use App\Entity\Group;
-use App\Service\GroupService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;

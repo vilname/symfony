@@ -7,16 +7,20 @@
     {% endblock %}
 </head>
 <body>
+{% include 'menu.twig' %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 <div style="width:50%;margin-left:10px;margin-top:10px" class="find-user-group">
-    <h2>Форма пользователя</h2>
+    <h2>{{title}}</h2>
     {{ form_start(form) }}
     {{ form_row(form._token) }}
     {{ form_row(form.users) }}
     {{ form_end(form, {'render_rest': false}) }}
 </div>
 
-<div class="find-user-group--best-group"></div>
+
+<div class="mb-3">
+    <div class="find-user-group--best-group"></div>
+</div>
 <div class="find-user-group--free-group"></div>
 
 {% block head_js %}

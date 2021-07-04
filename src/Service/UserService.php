@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\DTO\AddUserGroupDTO;
 use App\DTO\AddUserSkillDTO;
 use App\DTO\UserDTO;
 use App\Entity\Group;
@@ -257,7 +258,7 @@ class UserService
             $userDTO = new UserDTO([
                 'login' => $userName . '-' . $item,
                 'password' => $userName,
-                'roles' => json_encode(['ROLE_APPERTICE']),
+                'roles' => 'ROLE_APPERTICE',
                 'skillSelect' => $skillSelect
             ]);
 
@@ -276,6 +277,16 @@ class UserService
     public function getUserMessages(string $userName, int $count): string
     {
         return (new AddUserSkillDTO($userName, $count))->toAMQPMessage();
+    }
+
+    /**
+     * @param string $page
+     * @param string $perPage
+     * @return string
+     */
+    public function getUserGroupMessages(string $page, string $perPage): string
+    {
+        return (new AddUserGroupDTO($page, $perPage))->toAMQPMessage();
     }
 
     /**
@@ -305,6 +316,9 @@ class UserService
         $users = $userRepository->getUsers($page, $perPage, $role);
         $skills = [];
         $userDTO = [];
+
+
+
         foreach ($users as $user) {
             if ($user->getSkills()->getValues()) {
                 foreach ($user->getSkills()->getValues() as $skill) {
@@ -318,6 +332,11 @@ class UserService
             foreach ($user->groupsUsers as $userGroup) {
                 $currentGroup = $groupsResult[$userGroup['group_id']];
                 // проверяю осталось ли в группе свободные места
+
+//                dump($currentGroup->countUserGroup);
+//                dump($currentGroup->getMaxCountAppertice());
+//                dump("===========");
+
                 if ($currentGroup->countUserGroup
                     <= $currentGroup->getMaxCountAppertice()
                     && !$user->saveGroup
@@ -328,12 +347,13 @@ class UserService
                     $groupsResult[$userGroup['group_id']]->countUserGroup++;
                 }
 
+
+
             }
 
             // если пользователю не нашлось места
             if (!$user->saveGroup) {
                 $user->message = 'Пользователю не хватило места';
-
                 $userDTO = UserDTO::fromEntity($user);
             }
         }
@@ -352,6 +372,7 @@ class UserService
         $groupRepository = $this->entityManager->getRepository(Group::class);
         /** @var User $user */
         $user = $userRepository->findOneBy(['id' => $userId]);
+
         try {
 
             foreach ($user->getSkills()->getValues() as $skill) {
@@ -365,6 +386,7 @@ class UserService
         } catch (EntityNotFoundException $e) {
 
         }
+
 
         /** @var Group[] $groupItem */
         $groupItem = $groupRepository->findBy(['id' => $groups]);
@@ -381,6 +403,13 @@ class UserService
                 ];
                 $saveGroup = true;
             }
+        }
+
+        $cnt = array_column($result['best_groups'], 'cnt');
+        array_multisort($cnt, SORT_DESC, $result['best_groups']);
+
+        if (in_array('ROLE_TEACHER', $user->getRoles())) {
+            unset($result['best_free_groups']);
         }
 
         return $result;
@@ -438,6 +467,23 @@ class UserService
 //    -H "Cookie: sc=Gl0dwoK6fSWUeu58gPADjNRDNjoKIxHn; PHPSESSID=20c5fd7d6ab069d3c2b8dd74499adbbf" ^
 //    --data-raw "^{^\^"query^\^":^\^"^{^\^\n^\^\tusers(roles: ^\^\^\^"ROLE_APPERTICE^\^\^\^", first: 3)^{^\^\n    edges ^{^\^\n      node ^{^\^\n        id^\^\n        _id^\^\n        login^\^\n      ^}^\^\n    ^}^\^\n  ^}^\^\n^}^\^\n^\^\n^\^\n^\^",^\^"variables^\^":null^}" ^
 //    --compressed
+    }
+
+    public function freeTeacher(Request $request): FormInterface
+    {
+        $role = $request->request->get('role');
+        $role = $role ?: 'ROLE_TEACHER';
+
+        $userRepository = $this->entityManager->getRepository(User::class);
+        $users = $userRepository->freeTeacher($role);
+
+        return $this->formFactory->createBuilder(FormType::class)
+            ->add('users', ChoiceType::class, [
+                'placeholder' => 'Выберите вариант',
+                'choices' => Helper::getChoicesDataUsers($users),
+                'required' => false
+            ])
+            ->getForm();
     }
 
 }

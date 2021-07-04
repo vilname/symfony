@@ -25,7 +25,6 @@ jQuery(document).ready(function() {
     // })
 
     $('.find-user-group #form_users').on('change', (e) => {
-        console.log('e', e.currentTarget.value)
 
         $.ajax({
             method: 'POST',
@@ -46,16 +45,17 @@ jQuery(document).ready(function() {
                 $('.find-user-group--free-group').empty()
                 $('.find-user-group--best-group').empty()
 
-                if (res.best_free_groups.message) {
-                    $('.find-user-group--free-group').html(res.best_free_groups.message);
-                } else {
-                    $('.find-user-group--free-group').html(`<span>Ближайшая подходящая группа со свободными местами - ${res.best_free_groups.group_name}</span>`);
-                }
-
                 $('.find-user-group--best-group').html(best_group)
 
+                if (res.best_free_groups) {
+                    if (res.best_free_groups.message) {
+                        $('.find-user-group--free-group').html(res.best_free_groups.message);
+                    } else {
+                        $('.find-user-group--free-group').html(`<span>Ближайшая подходящая группа со свободными местами - ${res.best_free_groups.group_name}</span>`);
+                    }
 
 
+                }
             }
         })
     })

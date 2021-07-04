@@ -72,9 +72,6 @@ class Controller
      */
     public function addUsersSkillAction(string $userName, int $count, int $async): Response
     {
-        /** @var User $users */
-//        $users = $this->userService->saveUserRundomSkill($userName, $count);
-
         if ($userName !== null) {
             if ($async === 0) {
 //                $createdAppertice = $this->userService->addUserItem($group, $userName);
@@ -87,6 +84,22 @@ class Controller
         } else {
             $view = $this->view(['success' => false], 404);
         }
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @Rest\Post("/api/v1/add-user-group")
+     *
+     * @RequestParam(name="page")
+     * @RequestParam(name="perPage")
+     */
+    public function addUsersGroupAction(string $page, string $perPage): Response
+    {
+        $message = $this->userService->getUserGroupMessages($page, $perPage);
+
+        $result = $this->asyncService->publishToExchange(AsyncService::ADD_USER_GROUP, $message);
+        $view = $this->view(['success' => $result], $result ? 200 : 500);
 
         return $this->handleView($view);
     }

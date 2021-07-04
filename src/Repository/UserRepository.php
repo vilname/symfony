@@ -12,7 +12,7 @@ class UserRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u')
             ->from($this->getClassName(), 'u')
-            ->where('u.roles like :roles')->setParameter('roles', "%$roles%")
+            ->where("u.roles like '%$roles%'")
             ->orderBy('u.id', 'ASC')
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
@@ -34,11 +34,40 @@ class UserRepository extends EntityRepository
         return $stmt->fetchAllAssociative();
     }
 
-
     public function findUserNotGroup($role)
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT * FROM \"user\" WHERE id NOT IN (SELECT user_id FROM public.group_user) AND roles LIKE '%$role%'";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        $result = [];
+        while ($field = $stmt->fetch()) {
+            $result[] = User::setMap($field);
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * @param string $role
+     * @return User[]
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function freeTeacher($role)
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = sprintf("SELECT * FROM \"user\"
+            WHERE max_count_group >
+                  (SELECT count(group_id)
+                  FROM public.group_user
+                  WHERE user_id = \"user\".id)
+              AND roles LIKE '%%%s%%'", $role);
+
 
         $stmt = $conn->prepare($sql);
         $stmt->execute();
