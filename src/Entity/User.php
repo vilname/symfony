@@ -24,7 +24,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  */
 class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterface
 {
-    use DoctrineEntityCreatedAtTrait;
+//    use DoctrineEntityCreatedAtTrait;
     use DoctrineEntityUpdatedAtTrait;
 
     /**
@@ -52,6 +52,13 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
      * @JMS\Groups({"elastica"})
      */
     private string $roles;
+
+    /**
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     *
+     * @Gedmo\Timestampable(on="create")
+     */
+    private DateTime $createdAt;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -111,6 +118,16 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(): void
+    {
+        $this->createdAt = DateTime::createFromFormat('U', (string)time());
     }
 
     /**
@@ -229,10 +246,6 @@ class User implements JsonSerializable, UserInterface, HasMetaTimestampsInterfac
         return $this;
     }
 
-    public function setCreatedAt(): void
-    {
-        $this->createdAt = DateTime::createFromFormat('U', (string)time());
-    }
 
     /**
      * @return Collection|Skill[]
